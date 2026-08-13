@@ -105,12 +105,14 @@ html:not(.is-exporting) .ticks {
     width: 100%;
     max-width: 100%;
     overflow: hidden;
+    align-items: center;
     padding-inline: clamp(12px, 2cqi, 32px);
   }
 
   html:not(.is-exporting) .cover-marks {
     width: min(920px, 100%);
     max-width: 100%;
+    margin-inline: auto;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
@@ -141,17 +143,67 @@ html:not(.is-exporting) .ticks {
   html:not(.is-exporting) .cover-top,
   html:not(.is-exporting) .cover-sub {
     max-width: min(36ch, 100%);
+    margin-inline: auto;
+    text-align: center;
     padding-inline: 8px;
   }
 
-  html:not(.is-exporting) .feat-grid > li,
-  html:not(.is-exporting) .close-pkg {
+  html:not(.is-exporting) .feat-grid > li {
     overflow: hidden;
+  }
+
+  html:not(.is-exporting) .close-pkg {
+    overflow: visible;
   }
 
   html:not(.is-exporting) .hed-h,
   html:not(.is-exporting) .hed-l {
     max-width: 100%;
+  }
+
+  /* Features: show every card — don't clip the last row under the close page */
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) {
+    height: auto !important;
+    min-height: var(--deck-h, 100%) !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-fit,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-scale,
+  html.is-flow:not(.is-exporting)[dir="rtl"] .stage:has(.pg-feats) .sheet-scale,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-pad,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-body,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-body .pg,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .pg-feats {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    flex: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-pad {
+    padding-bottom: 88px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid {
+    height: auto !important;
+    flex: none !important;
+    grid-auto-rows: auto;
+    align-content: start;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible;
   }
 }
 
