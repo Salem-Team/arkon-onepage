@@ -42,12 +42,12 @@ export const PAGES: PageDef[] = [
       {
         n: "03",
         icon: "ledger",
-        title: tx("حسابات و ماليات", "Accounting and finance"),
+        title: tx("حسابات و ماليات وموديول محاسبة كامل", "Accounting, finance and a full accounting module"),
         points: [
-          tx("تسجيل الصفقة والايراد", "Post the deal and revenue"),
-          tx("التحصيل والعمولة في الحسابات", "Collections and commission in the books"),
-          tx("دفتر الاستاذ", "General ledger"),
-          tx("التقارير المالية", "Financial reports"),
+          tx("شجرة الحسابات وقيود اليوميه", "Chart of accounts and journal entries"),
+          tx("المصروفات والجرد", "Expenses and inventory count"),
+          tx("تسجيل الصفقة والايراد والتحصيل", "Post the deal, revenue and collections"),
+          tx("دفتر الاستاذ والتقارير المالية", "General ledger and financial reports"),
         ],
       },
       {
@@ -125,6 +125,50 @@ export const PAGES: PageDef[] = [
           tx("جدول الاقساط", "Installment schedule"),
           tx("المدفوعات والمتبقي", "Payments and outstanding"),
           tx("متابعة المحفظة", "Portfolio follow-up"),
+        ],
+      },
+      {
+        n: "11",
+        icon: "chat",
+        title: tx("الشات", "Chat module"),
+        points: [
+          tx("شات داخلي على نفس العميل", "Internal chat on the same client"),
+          tx("شات المستثمر من البوابة", "Investor chat from the portal"),
+          tx("اشعار على الويب والموبايل", "Notices on web and mobile"),
+          tx("السجل يفضل مع الشركة لو الموظف ساب", "The log stays with the company if the employee leaves"),
+        ],
+      },
+      {
+        n: "12",
+        icon: "match",
+        title: tx("المطابقة التلقائيه", "Auto matching"),
+        points: [
+          tx("مطابقة الوحده مع ميزانية العميل والمساحة والنوع", "Match the unit to budget, area and type"),
+          tx("شورت ليست حسب درجة التطابق", "A shortlist ranked by match score"),
+          tx("العرض وانت قدام العميل", "Present while you are with the client"),
+          tx("الرغبة محفوظة لو رجع تاني", "The need is stored if they come back"),
+        ],
+      },
+      {
+        n: "13",
+        icon: "files",
+        title: tx("الموديول القانوني", "Legal module"),
+        points: [
+          tx("العقود مربوطة بالعميل والوحده", "Contracts linked to the client and the unit"),
+          tx("مسار المسودة والاعتماد وPDF", "Draft, approval and PDF path"),
+          tx("نسخة معتمدة واحدة", "One approved copy"),
+          tx("الارشيف للمراجعة القانونية", "Archive for legal review"),
+        ],
+      },
+      {
+        n: "14",
+        icon: "calc",
+        title: tx("الاله الحاسبه لنظام السداد", "Payment-plan calculator"),
+        points: [
+          tx("حساب نظام السداد وانت قدام العميل في الاجتماع", "Work out the payment plan while you are with the client"),
+          tx("المقدم والاقساط والمدة تظهر فورا", "Down payment, installments and tenor show at once"),
+          tx("ارسال الجدول PDF", "Send the schedule as a PDF"),
+          tx("ارسال لينك يفتحه العميل بعد الاجتماع", "Send a link the client can open after the meeting"),
         ],
       },
     ],

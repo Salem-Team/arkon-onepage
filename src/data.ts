@@ -25,13 +25,13 @@ export const PACKAGES: {
   items: Tx[];
 }[] = [
   {
-    tag: "Offer",
+    tag: "Arkon Offer",
     featured: true,
     title: { ar: "السيستم كامل", en: "The full system" },
     desc: { ar: "١٥٠ الف جنيه شامل السيستم وتطبيق الموبايل والموقع. وصيانة مجانية لمدة ١٢ شهر.", en: "150,000 EGP includes the system, the mobile app and the website. Plus twelve months of maintenance, free." },
     amount: "150,000",
     ribbon: { ar: "صيانة ١٢ شهر مجاني", en: "12 months maintenance — free" },
-    note: { ar: "اوفر لاي شركه تيجي من جانب Arkon", en: "Offer for any company coming from Arkon" },
+    note: { ar: "لأي شركة تتعاقد عن طريق Arkon", en: "For any company contracting through Arkon" },
     items: [
       { ar: "السيستم على الويب", en: "The web system" },
       { ar: "تطبيق موبايل iOS و Android باسم ولوجو الشركه", en: "iOS & Android mobile app with the company name and logo" },

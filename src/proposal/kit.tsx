@@ -1,4 +1,3 @@
-import { Check, Copy } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { LEGAL, PACKAGES } from "../data";
 import { useLang, type Tx } from "../lang";
@@ -72,15 +71,15 @@ export function Sheet({
             <div className="sheet-pad">
               {!bare ? (
                 <header className="sheet-head">
-                  <span className="mark">Arkon × Rootk</span>
+                  <span className="mark">{t({ ar: "عرض شراكة Arkon", en: "Arkon Partner Offer" })}</span>
                   <span className="sec">
-                    {kicker ? t(kicker) : t({ ar: "عرض تنفيذي 2026", en: "Client proposal 2026" })}
+                    {kicker ? t(kicker) : t({ ar: "عرض شراكة Arkon", en: "Arkon Partner Offer" })}
                   </span>
                 </header>
               ) : null}
               <div className="sheet-body">{children}</div>
               <footer className="sheet-foot">
-                <span>Arkon × ROOTK</span>
+                <span>{t({ ar: "عرض شراكة Arkon · ROOTK", en: "Arkon Partner Offer · ROOTK" })}</span>
                 <span className="ch">
                   {CHAPTERS.find((c) => c.id === chapter)?.n} /{" "}
                   {t(CHAPTERS.find((c) => c.id === chapter)?.label ?? { ar: "", en: "" })}
@@ -143,83 +142,31 @@ export function CoverBody() {
   );
 }
 
-function CopyField({
-  label,
-  value,
-  onCopied,
-}: {
-  label: string;
-  value: string;
-  onCopied: (msg: string) => void;
-}) {
-  const { lang } = useLang();
-  const [ok, setOk] = useState(false);
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(value);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = value;
-      ta.setAttribute("readonly", "");
-      ta.style.position = "fixed";
-      ta.style.insetInlineStart = "-9999px";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      ta.remove();
-    }
-    setOk(true);
-    onCopied(lang === "ar" ? `تم نسخ ${label}` : `${label} copied`);
-    window.setTimeout(() => setOk(false), 1800);
-  }
-
-  return (
-    <div className="copy-field">
-      <div className="copy-row">
-        <span className="copy-label">{label}</span>
-        <div className="copy-value">
-          <strong dir="ltr">{value}</strong>
-          <button
-            type="button"
-            className={`copy-btn${ok ? " is-ok" : ""}`}
-            onClick={() => void copy()}
-            aria-label={lang === "ar" ? `نسخ ${label}` : `Copy ${label}`}
-          >
-            {ok ? <Check className="ico" strokeWidth={1.8} /> : <Copy className="ico" strokeWidth={1.8} />}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function CloseBody() {
   const { t, lang } = useLang();
-  const [toast, setToast] = useState<string | null>(null);
-
-  function flash(msg: string) {
-    setToast(msg);
-    window.setTimeout(() => setToast(null), 2000);
-  }
 
   return (
     <div className="close">
-      <p className="close-kicker" dir={lang === "ar" ? "rtl" : "ltr"}>
-        {lang === "ar" ? "ROOTK · الشريك التقني" : "ROOTK · TECHNICAL PARTNER"}
-      </p>
-      <img className="close-rootk" src="/assets/rootk-brand.png" alt="ROOTK" />
-      <h1 dir="ltr">ROOTK</h1>
-      <p className="erp" dir={lang === "ar" ? "rtl" : "ltr"}>
-        {lang === "ar" ? "نظام تشغيل عقاري" : "Real Estate ERP"}
-      </p>
-      <p className="close-line">
-        {lang === "ar"
-          ? "١٥٠ الف جنيه شامل السيستم وتطبيق الموبايل والموقع. وصيانة مجانية لمدة ١٢ شهر."
-          : "150,000 EGP includes the system, the mobile app and the website. Plus twelve months of maintenance, free."}
-      </p>
+      <div className="close-lead">
+        <p className="close-kicker" dir={lang === "ar" ? "rtl" : "ltr"}>
+          {lang === "ar" ? "عرض شراكة Arkon · ROOTK" : "ARKON PARTNER OFFER · ROOTK"}
+        </p>
+        <div className="close-brand">
+          <img className="close-rootk" src="/assets/rootk-brand.png" alt="ROOTK" />
+          <h1 dir="ltr">ROOTK</h1>
+        </div>
+        <p className="erp" dir={lang === "ar" ? "rtl" : "ltr"}>
+          {lang === "ar" ? "نظام تشغيل عقاري" : "Real Estate ERP"}
+        </p>
+        <p className="close-line">
+          {lang === "ar"
+            ? "١٥٠ الف جنيه شامل السيستم وتطبيق الموبايل والموقع. وصيانة مجانية لمدة ١٢ شهر."
+            : "150,000 EGP includes the system, the mobile app and the website. Plus twelve months of maintenance, free."}
+        </p>
+      </div>
 
-      <div className={`close-pkgs${PACKAGES.length === 1 ? " is-one" : ""}`}>
+      <div className="close-offer">
+        <div className={`close-pkgs${PACKAGES.length === 1 ? " is-one" : ""}`}>
         {PACKAGES.map((p) => (
           <article key={p.tag} className={`close-pkg${p.featured ? " is-hot" : ""}`}>
             <div className="close-pkg-top">
@@ -250,28 +197,29 @@ export function CloseBody() {
           <span>{lang === "ar" ? "السجل التجاري والبطاقه الضريبيه" : "Commercial register & tax card"}</span>
         </div>
         <div className="close-creds">
-          <CopyField
-            label={lang === "ar" ? "السجل التجاري" : "Commercial register"}
-            value={t(LEGAL.reg)}
-            onCopied={flash}
-          />
-          <CopyField
-            label={lang === "ar" ? "البطاقه الضريبيه" : "Tax card"}
-            value={t(LEGAL.tax)}
-            onCopied={flash}
-          />
+          <div className="copy-field">
+            <div className="copy-row">
+              <span className="copy-label">{lang === "ar" ? "السجل التجاري" : "Commercial register"}</span>
+              <div className="copy-value">
+                <strong dir="ltr">{t(LEGAL.reg)}</strong>
+              </div>
+            </div>
+          </div>
+          <div className="copy-field">
+            <div className="copy-row">
+              <span className="copy-label">{lang === "ar" ? "البطاقه الضريبيه" : "Tax card"}</span>
+              <div className="copy-value">
+                <strong dir="ltr">{t(LEGAL.tax)}</strong>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
       </div>
 
       <div className="close-legal">
-        <p>ARKON × ROOTK · 2026</p>
+        <p>{lang === "ar" ? "عرض شراكة Arkon · ROOTK · 2026" : "ARKON PARTNER OFFER · ROOTK · 2026"}</p>
       </div>
-
-      {toast ? (
-        <div className="close-toast" role="status" aria-live="polite">
-          {toast}
-        </div>
-      ) : null}
     </div>
   );
 }

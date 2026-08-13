@@ -70,7 +70,7 @@ export function ExportOverlay({
         <Geom />
       </div>
       <div className="xpdf-panel">
-        <p className="xpdf-k">Arkon × Rootk</p>
+        <p className="xpdf-k">{lang === "ar" ? "عرض شراكة Arkon" : "Arkon Partner Offer"}</p>
         <h2>{headline}</h2>
         <p className="xpdf-num">
           <b>{Math.min(100, Math.max(0, pct))}</b>
@@ -95,7 +95,7 @@ export function ExportOverlay({
             </button>
           </div>
         ) : done ? (
-          <p className="xpdf-note">ROOTK CRM · Client Proposal 2026</p>
+          <p className="xpdf-note">{lang === "ar" ? "ROOTK CRM · عرض شراكة Arkon" : "ROOTK CRM · Arkon Partner Offer"}</p>
         ) : null}
       </div>
     </div>

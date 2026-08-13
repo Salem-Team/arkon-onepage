@@ -1,0 +1,1163 @@
+/* =============================================================================
+   Responsive overlay — loaded last. Keeps every sheet, card and line of copy
+   inside the viewport on phones, tablets, laptops and desktops (LTR + RTL).
+   ============================================================================= */
+
+html:not(.is-exporting),
+html:not(.is-exporting) body,
+html:not(.is-exporting) #root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+html:not(.is-exporting) .doc,
+html:not(.is-exporting) .deck,
+html:not(.is-exporting) .deck-track,
+html:not(.is-exporting) .stage,
+html:not(.is-exporting) .sheet-fit,
+html:not(.is-exporting) .sheet-scale,
+html:not(.is-exporting) .sheet,
+html:not(.is-exporting) .sheet-pad,
+html:not(.is-exporting) .sheet-body,
+html:not(.is-exporting) .cover,
+html:not(.is-exporting) .pg,
+html:not(.is-exporting) .pg-feats,
+html:not(.is-exporting) .close {
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+html:not(.is-exporting) img,
+html:not(.is-exporting) svg,
+html:not(.is-exporting) video,
+html:not(.is-exporting) canvas {
+  max-width: 100%;
+}
+
+html:not(.is-exporting) h1,
+html:not(.is-exporting) h2,
+html:not(.is-exporting) h3,
+html:not(.is-exporting) h4,
+html:not(.is-exporting) p,
+html:not(.is-exporting) li,
+html:not(.is-exporting) strong,
+html:not(.is-exporting) span,
+html:not(.is-exporting) .hed-h,
+html:not(.is-exporting) .hed-l,
+html:not(.is-exporting) .cover-top,
+html:not(.is-exporting) .cover-sub {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+html:not(.is-exporting) .tile,
+html:not(.is-exporting) .feat-grid > li,
+html:not(.is-exporting) .close-pkg,
+html:not(.is-exporting) .domain,
+html:not(.is-exporting) .pipe-st,
+html:not(.is-exporting) .copy-row,
+html:not(.is-exporting) .chrome,
+html:not(.is-exporting) .chrome-meta,
+html:not(.is-exporting) .ticks {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* -----------------------------------------------------------------------------
+   Laptop / desktop: never let chrome or cards blow the width
+   ----------------------------------------------------------------------------- */
+@media (min-width: 701px) {
+  html.is-flow:not(.is-exporting) .chrome-brand {
+    display: none;
+  }
+}
+
+@media (min-width: 1201px) {
+  html:not(.is-exporting) .doc,
+  html:not(.is-exporting) .deck,
+  html:not(.is-exporting) .stage,
+  html:not(.is-exporting) .sheet {
+    overflow-x: clip;
+  }
+
+  html:not(.is-exporting) .chrome {
+    width: 100%;
+    max-width: 100%;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+  }
+
+  html:not(.is-exporting) .ticks {
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  html:not(.is-exporting) .ticks::-webkit-scrollbar {
+    display: none;
+  }
+
+  html:not(.is-exporting) .cover.cover-logos {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding-inline: clamp(12px, 2cqi, 32px);
+  }
+
+  html:not(.is-exporting) .cover-marks {
+    width: min(920px, 100%);
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    justify-items: center;
+    gap: clamp(16px, 3cqi, 56px);
+  }
+
+  html:not(.is-exporting) .cover-marks figure {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  html:not(.is-exporting) .cover-mark-arkon,
+  html:not(.is-exporting) .cover-mark-rootk {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: clamp(56px, 8cqi, 96px);
+    object-fit: contain;
+  }
+
+  html:not(.is-exporting) .cover-mark-rootk {
+    max-height: clamp(40px, 5.6cqi, 70px);
+    max-width: 78%;
+  }
+
+  html:not(.is-exporting) .cover-top,
+  html:not(.is-exporting) .cover-sub {
+    max-width: min(36ch, 100%);
+    padding-inline: 8px;
+  }
+
+  html:not(.is-exporting) .feat-grid > li,
+  html:not(.is-exporting) .close-pkg {
+    overflow: hidden;
+  }
+
+  html:not(.is-exporting) .hed-h,
+  html:not(.is-exporting) .hed-l {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1439px) {
+  html:not(.is-exporting) .ticks .tick-l {
+    max-width: 12ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  html:not(.is-exporting) .sheet-pad {
+    padding-inline: clamp(16px, 2.2cqi, 32px) !important;
+  }
+
+  html:not(.is-exporting) .hed-h {
+    font-size: clamp(18px, 2.1cqi, 28px);
+  }
+
+  html:not(.is-exporting) .feat-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1440px) {
+  html:not(.is-exporting) .cover-top {
+    font-size: clamp(36px, 3.4cqi, 52px);
+  }
+
+  html:not(.is-exporting) .cover-sub {
+    font-size: clamp(16px, 1.4cqi, 22px);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Tablet + phone (document scroll)
+   ----------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  html:not(.is-exporting),
+  html:not(.is-exporting) body,
+  html:not(.is-exporting) #root,
+  html.is-flow:not(.is-exporting) .doc,
+  html.is-flow:not(.is-exporting) .deck,
+  html.is-flow:not(.is-exporting) .deck-track,
+  html.is-flow:not(.is-exporting) .stage,
+  html.is-flow:not(.is-exporting) .sheet-fit,
+  html.is-flow:not(.is-exporting) .sheet-scale,
+  html.is-flow:not(.is-exporting)[dir="rtl"] .sheet-scale,
+  html.is-flow:not(.is-exporting) .sheet,
+  html.is-flow:not(.is-exporting) .sheet-pad,
+  html.is-flow:not(.is-exporting) .sheet-body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: clip !important;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-fit,
+  html.is-flow:not(.is-exporting) .sheet-scale,
+  html.is-flow:not(.is-exporting)[dir="rtl"] .sheet-scale {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    right: auto !important;
+    left: 0 !important;
+    height: auto !important;
+    transform: none !important;
+    transform-origin: top left !important;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet.is-on::before {
+    display: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet.is-on .cover-mark-arkon,
+  html.is-flow:not(.is-exporting) .sheet.is-on .cover-mark-rootk,
+  html.is-flow:not(.is-exporting) .sheet.is-on .cover-marks figure,
+  html.is-flow:not(.is-exporting) .sheet.is-on .cover-x,
+  html.is-flow:not(.is-exporting) .sheet.is-on .cover-top,
+  html.is-flow:not(.is-exporting) .sheet.is-on .cover-sub {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet--cover .sheet-wash::before {
+    inset: 0 !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-aura,
+  html.is-flow:not(.is-exporting) .cover.cover-logos,
+  html.is-flow:not(.is-exporting) .skyline,
+  html.is-flow:not(.is-exporting) .sheet-wash {
+    overflow: hidden !important;
+    max-width: 100%;
+  }
+
+  html.is-flow:not(.is-exporting) .skyline {
+    width: 100% !important;
+    height: auto;
+    max-height: 120px;
+    inset-inline: 0;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    height: auto !important;
+    min-height: calc(52px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: 8px;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    overflow: hidden !important;
+  }
+
+  html.is-flow:not(.is-exporting) .ticks {
+    display: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .ticks::-webkit-scrollbar {
+    display: none;
+  }
+
+  html.is-flow:not(.is-exporting) .ticks button {
+    flex: 0 0 auto;
+    width: auto !important;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 6px 8px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-meta {
+    order: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    max-width: none;
+    margin-inline-start: auto !important;
+    overflow: visible;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-pdf {
+    flex-shrink: 0;
+    min-height: 36px;
+    height: 36px;
+    padding: 0 10px 0 8px;
+    font-size: 10px;
+  }
+
+  html.is-flow:not(.is-exporting) .lang {
+    flex-shrink: 0;
+    min-width: 76px !important;
+    width: 76px;
+  }
+
+  html.is-flow:not(.is-exporting) .lang button {
+    min-height: 28px;
+    padding: 4px 6px;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-pad {
+    padding-top: 16px !important;
+    padding-bottom: calc(24px + var(--pager-h) + env(safe-area-inset-bottom, 0px)) !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .hed,
+  html.is-flow:not(.is-exporting) .hed-h,
+  html.is-flow:not(.is-exporting) .hed-l {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  html.is-flow:not(.is-exporting) .hed-h {
+    font-size: clamp(20px, 5.6vw, 28px) !important;
+    line-height: 1.35 !important;
+    white-space: pre-line;
+  }
+
+  html.is-flow:not(.is-exporting) .hed-l {
+    font-size: clamp(13px, 3.4vw, 16px) !important;
+    line-height: 1.55 !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover,
+  html.is-flow:not(.is-exporting) .cover.cover-logos {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: center;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: clamp(16px, 4vw, 28px) !important;
+    padding: 8px 0 !important;
+    overflow: hidden !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-top,
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-sub {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    align-self: stretch !important;
+    box-sizing: border-box;
+    padding-inline: 8px !important;
+    margin-inline: 0 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    margin-inline: auto !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-top {
+    font-size: clamp(20px, 6.2vw, 30px) !important;
+    line-height: 1.35 !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-sub {
+    font-size: clamp(13px, 3.8vw, 16px) !important;
+    line-height: 1.55 !important;
+    width: min(100%, 28ch) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-marks {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    justify-items: center;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: clamp(8px, 3vw, 18px) !important;
+    flex-wrap: unset !important;
+    padding-inline: 0 !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-marks figure {
+    min-width: 0 !important;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-arkon {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 52px !important;
+    max-height: 52px !important;
+    object-fit: contain !important;
+    object-position: center;
+    margin-inline: auto;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-rootk {
+    display: block;
+    width: auto !important;
+    max-width: 72% !important;
+    height: 36px !important;
+    max-height: 36px !important;
+    object-fit: contain !important;
+    object-position: center;
+    margin-inline: auto;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-x {
+    font-size: clamp(20px, 5.5vw, 32px) !important;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid,
+  html.is-flow:not(.is-exporting) .close-pkgs,
+  html.is-flow:not(.is-exporting) .close-pkgs.is-one,
+  html.is-flow:not(.is-exporting) .cover-grid,
+  html.is-flow:not(.is-exporting) .hero-br,
+  html.is-flow:not(.is-exporting) .auto-acts,
+  html.is-flow:not(.is-exporting) .iso-grid,
+  html.is-flow:not(.is-exporting) .domain ul,
+  html.is-flow:not(.is-exporting) .close-creds {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li,
+  html.is-flow:not(.is-exporting) .close-pkg,
+  html.is-flow:not(.is-exporting) .tile,
+  html.is-flow:not(.is-exporting) .domain,
+  html.is-flow:not(.is-exporting) .copy-row {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li strong,
+  html.is-flow:not(.is-exporting) .feat-dots li,
+  html.is-flow:not(.is-exporting) .close-inc li {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li strong {
+    font-size: clamp(13px, 2.4vw, 16px);
+  }
+
+  html.is-flow:not(.is-exporting) .feat-dots li {
+    font-size: clamp(12px, 2.2vw, 14.5px);
+  }
+
+  html.is-flow:not(.is-exporting) .close,
+  html.is-flow:not(.is-exporting) .close-lead,
+  html.is-flow:not(.is-exporting) .close-offer,
+  html.is-flow:not(.is-exporting) .close-pkg,
+  html.is-flow:not(.is-exporting) .close-access {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  html.is-flow:not(.is-exporting) .close h1 {
+    font-size: clamp(28px, 8vw, 44px);
+    max-width: 100%;
+  }
+
+  html.is-flow:not(.is-exporting) .close-line,
+  html.is-flow:not(.is-exporting) .close-pledge {
+    max-width: 100% !important;
+  }
+
+  html.is-flow:not(.is-exporting) .copy-label,
+  html.is-flow:not(.is-exporting) .copy-value strong {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+  }
+
+  html.is-flow:not(.is-exporting) .j-rail li {
+    min-width: 0 !important;
+    flex: 1 1 100% !important;
+  }
+
+  html.is-flow:not(.is-exporting) .pager {
+    left: 0 !important;
+    right: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    inset-inline: 0 !important;
+    box-sizing: border-box;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .pager-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    gap: 6px;
+  }
+
+  html.is-flow:not(.is-exporting) .pager button {
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    font-size: 12px !important;
+    padding: 10px 8px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .pager-arrow {
+    display: none;
+  }
+}
+
+/* iPad / tablet portrait: keep 2-col cards, roomier type */
+@media (min-width: 701px) and (max-width: 1200px) {
+  html.is-flow:not(.is-exporting) .ticks {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    justify-content: flex-start;
+    gap: 4px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+  html.is-flow:not(.is-exporting) .sheet-pad {
+    padding-top: 22px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-top {
+    font-size: clamp(28px, 5vw, 40px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-arkon {
+    height: clamp(48px, 8vw, 72px) !important;
+    max-height: clamp(48px, 8vw, 72px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-rootk {
+    height: clamp(34px, 5.6vw, 50px) !important;
+    max-height: clamp(34px, 5.6vw, 50px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .hed-h {
+    font-size: clamp(24px, 4vw, 32px) !important;
+  }
+}
+
+/* Large phones / small tablets */
+@media (max-width: 700px) {
+  html.is-flow:not(.is-exporting) .feat-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-grid,
+  html.is-flow:not(.is-exporting) .hero-br,
+  html.is-flow:not(.is-exporting) .auto-acts,
+  html.is-flow:not(.is-exporting) .iso-grid,
+  html.is-flow:not(.is-exporting) .domain ul,
+  html.is-flow:not(.is-exporting) .close-creds {
+    grid-template-columns: 1fr !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li {
+    padding: 16px 14px 18px;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li strong {
+    font-size: clamp(15px, 4.2vw, 17px);
+  }
+
+  html.is-flow:not(.is-exporting) .feat-dots li {
+    font-size: clamp(13.5px, 3.8vw, 15px);
+  }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  html.is-flow:not(.is-exporting) .chrome {
+    gap: 6px;
+    padding-bottom: 6px;
+  }
+
+  html.is-flow:not(.is-exporting) .ticks button {
+    min-width: 32px;
+    min-height: 32px;
+    padding: 4px 6px !important;
+    font-size: 10px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .lang {
+    min-width: 70px !important;
+    width: 70px;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-pdf {
+    padding: 0 8px;
+    gap: 4px;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-pdf-l {
+    display: none;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-pad {
+    padding-top: 14px !important;
+    padding-bottom: calc(20px + var(--pager-h) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-top {
+    font-size: clamp(20px, 6.6vw, 28px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-sub {
+    font-size: clamp(13px, 3.6vw, 15px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-arkon {
+    max-height: clamp(32px, 10vw, 48px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-rootk {
+    height: clamp(24px, 7vw, 34px) !important;
+    max-height: clamp(24px, 7vw, 34px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .hed-h {
+    font-size: clamp(18px, 5.8vw, 24px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .hed-l {
+    font-size: 13px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .pager button {
+    font-size: 11px;
+    min-height: 42px;
+    padding: 8px 8px;
+  }
+
+  html.is-flow:not(.is-exporting) .close-amt,
+  html.is-flow:not(.is-exporting) .close-pkg.is-hot .close-amt {
+    font-size: clamp(26px, 8vw, 36px);
+  }
+}
+
+/* Close / price page — phone & tablet */
+@media (max-width: 1200px) {
+  html.is-flow:not(.is-exporting) .close {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    grid-template-areas: none !important;
+    gap: 18px !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-lead,
+  html.is-flow:not(.is-exporting) .close-offer,
+  html.is-flow:not(.is-exporting) .close-legal {
+    grid-area: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-lead {
+    align-items: stretch;
+    gap: 10px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-brand {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  html.is-flow:not(.is-exporting) .close-rootk {
+    width: auto !important;
+    height: 36px !important;
+    max-width: 40vw;
+    margin: 0 !important;
+    flex-shrink: 0;
+  }
+
+  html.is-flow:not(.is-exporting) .close h1 {
+    font-size: clamp(26px, 8vw, 34px) !important;
+    line-height: 1.05 !important;
+    text-align: start;
+    margin: 0;
+    min-width: 0;
+  }
+
+  html.is-flow:not(.is-exporting) .close-kicker {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+  }
+
+  html.is-flow:not(.is-exporting) .close .erp {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+  }
+
+  html.is-flow:not(.is-exporting) .close-line {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    text-align: start;
+  }
+
+  html.is-flow:not(.is-exporting) .close-pkgs,
+  html.is-flow:not(.is-exporting) .close-pkgs.is-one,
+  html:not(.is-exporting) .close-pkgs.is-one {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-pkg {
+    padding: 16px 14px 14px !important;
+    gap: 10px;
+    overflow: visible;
+  }
+
+  html.is-flow:not(.is-exporting) .close-rib {
+    position: static !important;
+    transform: none !important;
+    inset: auto !important;
+    display: inline-flex;
+    align-self: flex-start;
+    margin: 0 0 6px;
+    font-size: 10px;
+    padding: 5px 10px;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.3;
+  }
+
+  html.is-flow:not(.is-exporting) .close-pkg h3 {
+    font-size: clamp(18px, 5vw, 22px);
+  }
+
+  html.is-flow:not(.is-exporting) .close-pkg p {
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  html.is-flow:not(.is-exporting) .close-inc li {
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  html.is-flow:not(.is-exporting) .close-pkg-price {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding-top: 10px;
+  }
+
+  html.is-flow:not(.is-exporting) .close-offer-note {
+    flex: none;
+    width: 100%;
+    font-size: 13px !important;
+    line-height: 1.45;
+  }
+
+  html.is-flow:not(.is-exporting) .close-access {
+    padding: 14px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-legal {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+  html.is-flow:not(.is-exporting) .close {
+    gap: 16px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-rootk {
+    height: 30px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close h1 {
+    font-size: clamp(24px, 7.4vw, 30px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-pkg {
+    padding: 14px 12px 12px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-amt,
+  html.is-flow:not(.is-exporting) .close-pkg.is-hot .close-amt {
+    font-size: clamp(24px, 7vw, 32px) !important;
+  }
+}
+
+/* Tiny phones */
+@media (max-width: 360px) {
+  html.is-flow:not(.is-exporting) .lang {
+    min-width: 64px !important;
+    width: 64px;
+  }
+
+  html.is-flow:not(.is-exporting) .lang button {
+    padding: 4px 4px;
+    font-size: 9px;
+  }
+
+  html.is-flow:not(.is-exporting) .ticks button {
+    min-width: 30px;
+    padding: 4px 5px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-top {
+    font-size: clamp(18px, 6.4vw, 24px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-pad {
+    padding-left: max(12px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(12px, env(safe-area-inset-right, 0px)) !important;
+  }
+}
+
+/* =============================================================================
+   Phone layout — last in cascade. Compact chrome, stacked cards, no clip.
+   ============================================================================= */
+@media (max-width: 700px) {
+  html.is-flow:not(.is-exporting) {
+    --chrome-h: 56px;
+    --pager-h: 76px;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px !important;
+    overflow: hidden !important;
+    padding-left: max(12px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(12px, env(safe-area-inset-right, 0px)) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-brand {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-brand img.arkon {
+    height: 15px !important;
+    width: auto;
+    max-width: 68px;
+    object-fit: contain;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-brand img.rootk {
+    height: 16px !important;
+    width: auto;
+    max-width: 20px;
+    object-fit: contain;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-brand .x {
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  html.is-flow:not(.is-exporting) .ticks {
+    display: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-meta {
+    margin-inline-start: 0 !important;
+    flex: 0 0 auto !important;
+    gap: 6px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .stage {
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  html.is-flow:not(.is-exporting) .stage:has(.cover) {
+    min-height: calc(100svh - var(--chrome-h) - var(--pager-h)) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-foot {
+    display: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-head {
+    gap: 8px;
+    padding-bottom: 6px;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-head .mark,
+  html.is-flow:not(.is-exporting) .sheet-head .sec {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 48%;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-pad {
+    padding-top: 14px !important;
+    padding-bottom: calc(32px + var(--pager-h) + env(safe-area-inset-bottom, 0px)) !important;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(16px, env(safe-area-inset-right, 0px)) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-body {
+    padding: 4px 0 0 !important;
+    overflow: visible !important;
+    gap: 10px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos {
+    gap: 22px !important;
+    padding: 8px 4px 12px !important;
+    justify-content: center;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-top {
+    font-size: clamp(22px, 6.4vw, 28px) !important;
+    line-height: 1.4 !important;
+    padding-inline: 4px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-top::after {
+    margin-top: 14px;
+    width: 32px;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-marks {
+    width: min(100%, 340px) !important;
+    margin-inline: auto;
+    gap: 10px !important;
+    padding-inline: 4px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .hed {
+    margin-bottom: 4px;
+  }
+
+  html.is-flow:not(.is-exporting) .hed-h {
+    font-size: clamp(20px, 5.6vw, 24px) !important;
+    line-height: 1.4 !important;
+  }
+
+  html.is-flow:not(.is-exporting) .hed-l {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    margin-top: 4px;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li {
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px !important;
+    padding: 16px 16px 16px !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-head {
+    display: flex !important;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px !important;
+    grid-template-columns: none !important;
+    grid-template-areas: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li em,
+  html.is-flow:not(.is-exporting) .feat-grid > li .tile-ico,
+  html.is-flow:not(.is-exporting) .feat-grid > li strong {
+    grid-area: auto !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li .tile-ico {
+    width: 28px !important;
+    height: 28px !important;
+    margin: 0 !important;
+    flex-shrink: 0;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li em {
+    padding-top: 6px !important;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li strong {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+    padding-top: 4px !important;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-dots {
+    gap: 5px;
+    padding-inline-start: 2px;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-dots li {
+    font-size: 13.5px !important;
+    line-height: 1.5 !important;
+    padding-inline-start: 12px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .pager {
+    padding-left: max(10px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(10px, env(safe-area-inset-right, 0px)) !important;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .pager-inner {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    width: 100% !important;
+    max-width: none !important;
+    gap: 8px !important;
+    padding: 4px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .pager-arrow {
+    display: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .pager button {
+    overflow: visible !important;
+    text-overflow: unset !important;
+    white-space: nowrap;
+    min-height: 44px !important;
+    font-size: 13px !important;
+    padding: 10px 12px !important;
+    letter-spacing: 0 !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-lead {
+    text-align: start;
+  }
+
+  html.is-flow:not(.is-exporting) .close-brand {
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  html.is-flow:not(.is-exporting) .close-rootk {
+    height: 28px !important;
+    max-width: 32px;
+  }
+
+  html.is-flow:not(.is-exporting) .close h1 {
+    font-size: clamp(26px, 8vw, 32px) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close {
+    gap: 20px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-pkg {
+    overflow: visible !important;
+    padding: 16px 16px 16px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-rib {
+    margin: 0 0 8px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-access {
+    padding-inline: 14px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-legal {
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding-inline: 14px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .close-legal p {
+    align-self: center !important;
+    text-align: center !important;
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  html.is-flow:not(.is-exporting) .chrome-brand img.arkon {
+    max-width: 58px;
+    height: 14px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .pager button {
+    font-size: 12px !important;
+    padding: 10px 8px !important;
+  }
+}

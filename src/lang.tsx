@@ -25,8 +25,8 @@ export function LangProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("arkon-lang", lang);
     document.title =
       lang === "ar"
-        ? "ROOTK CRM — عرض تنفيذي 2026 | أركون × روتك"
-        : "ROOTK CRM — Client Proposal 2026 | Arkon × ROOTK";
+        ? "ROOTK CRM — عرض شراكة Arkon"
+        : "ROOTK CRM — Arkon Partner Offer";
   }, [lang, dir]);
 
   const value = useMemo<Ctx>(

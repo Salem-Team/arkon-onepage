@@ -100,20 +100,20 @@ export function PageView({ page }: { page: ContentPage }) {
           <ol className="feat-grid">
             {(page.steps ?? []).map((s) => (
               <li key={s.n ?? s.title.en}>
-                <em>{s.n}</em>
-                <span className="tile-ico">
-                  <Icon name={s.icon} />
-                </span>
-                <div className="feat-copy">
+                <div className="feat-head">
+                  <em>{s.n}</em>
+                  <span className="tile-ico">
+                    <Icon name={s.icon} />
+                  </span>
                   <strong>{t(s.title)}</strong>
-                  {s.points?.length ? (
-                    <ul className="feat-dots">
-                      {s.points.map((p) => (
-                        <li key={p.en}>{t(p)}</li>
-                      ))}
-                    </ul>
-                  ) : null}
                 </div>
+                {s.points?.length ? (
+                  <ul className="feat-dots">
+                    {s.points.map((p) => (
+                      <li key={p.en}>{t(p)}</li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
           </ol>

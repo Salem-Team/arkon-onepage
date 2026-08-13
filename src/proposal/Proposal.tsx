@@ -93,7 +93,7 @@ export function Proposal() {
         const chrome = document.querySelector<HTMLElement>(".chrome");
         const offset = chrome?.offsetHeight ?? 0;
         const top = el.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top: Math.max(0, top), behavior });
+        window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
       } else {
         const port = portRef.current;
         if (port) {
@@ -115,7 +115,7 @@ export function Proposal() {
     setProgress({ phase: "prepare", current: 0, total, percent: 4 });
     try {
       await exportProposalPdf({
-        filename: lang === "ar" ? "Arkon-Rootk-CRM-Proposal.pdf" : "Arkon-Rootk-CRM-Proposal-EN.pdf",
+        filename: lang === "ar" ? "Arkon-Partner-Offer-ROOTK.pdf" : "Arkon-Partner-Offer-ROOTK-EN.pdf",
         onProgress: setProgress,
       });
       window.setTimeout(() => {
@@ -228,10 +228,18 @@ export function Proposal() {
     <div className={`doc doc--${sheetTone} is-flow${docScroll ? " is-doc-scroll" : ""}`}>
       <div className="doc-desk" aria-hidden="true" />
       <header className="chrome">
+        <div className="chrome-brand">
+          <img className="arkon" src="/assets/arkon-logo@2x.png" alt="Arkon" />
+          <span className="x" aria-hidden="true">
+            ×
+          </span>
+          <img className="rootk" src="/assets/rootk-brand.png" alt="ROOTK" />
+        </div>
         <nav className="ticks" aria-label={lang === "ar" ? "فصول العرض" : "Proposal chapters"}>
           {CHAPTERS.map((c) => (
             <button key={c.id} type="button" className={c.id === currentChapter.id ? "is-on" : ""} onClick={() => go(c.from)}>
-              {c.n} {c.label[lang]}
+              <span className="tick-n">{c.n}</span>
+              <span className="tick-l">{c.label[lang]}</span>
             </button>
           ))}
         </nav>
@@ -252,7 +260,7 @@ export function Proposal() {
               <path d="M9.2 1.5V5h3.6" fill="none" stroke="currentColor" strokeWidth="1.2" />
               <path d="M8 7.2v5.2M5.8 10.2 8 12.4l2.2-2.2" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
             </svg>
-            PDF
+            <span className="chrome-pdf-l">PDF</span>
           </button>
           <div className="lang" role="group" aria-label={lang === "ar" ? "اللغة" : "Language"}>
             <button type="button" className={lang === "ar" ? "is-on" : ""} onClick={() => setLang("ar")}>
@@ -288,13 +296,15 @@ export function Proposal() {
       <div className="pager">
         <div className="pager-inner">
           <button type="button" disabled={active <= 1} onClick={() => go(activeRef.current - 1)}>
-            {lang === "ar" ? "→ السابق" : "← Previous"}
+            <span className="pager-arrow" aria-hidden="true">{lang === "ar" ? "→" : "←"}</span>
+            {lang === "ar" ? "السابق" : "Previous"}
           </button>
           <span>
             {pad(active)} / {pad(total)}
           </span>
           <button type="button" disabled={active >= total} onClick={() => go(activeRef.current + 1)}>
-            {lang === "ar" ? "التالي ←" : "Next →"}
+            {lang === "ar" ? "التالي" : "Next"}
+            <span className="pager-arrow" aria-hidden="true">{lang === "ar" ? "←" : "→"}</span>
           </button>
         </div>
       </div>

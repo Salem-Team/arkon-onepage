@@ -10,9 +10,6 @@ export type ExportProgress = {
   percent: number;
 };
 
-const A4_W = 1280;
-const A4_H = 720;
-
 function percent(phase: ExportPhase, current: number, total: number) {
   if (phase === "prepare") return 6;
   if (phase === "capture") return Math.round(8 + ((current - 1) / Math.max(total, 1)) * 82);
@@ -58,20 +55,29 @@ async function loadFontEmbedCss() {
   }
 }
 
-async function captureSheet(el: HTMLElement, fontEmbedCSS: string) {
+function sheetSize(el: HTMLElement) {
+  const w = Math.max(1, Math.round(el.offsetWidth || el.getBoundingClientRect().width));
+  const h = Math.max(1, Math.round(el.offsetHeight || el.getBoundingClientRect().height));
+  return { w, h };
+}
+
+async function captureSheet(el: HTMLElement, fontEmbedCSS: string, w: number, h: number) {
   const opts = {
     pixelRatio: 2,
     cacheBust: false,
     fontEmbedCSS,
     preferredFontFormat: "woff2" as const,
+    width: w,
+    height: h,
+    canvasWidth: w * 2,
+    canvasHeight: h * 2,
     style: {
-      transform: "none",
       opacity: "1",
     },
   };
   let blob = await toBlob(el, opts);
   if (!blob) {
-    blob = await toBlob(el, { ...opts, pixelRatio: 1 });
+    blob = await toBlob(el, { ...opts, pixelRatio: 1, canvasWidth: w, canvasHeight: h });
   }
   if (!blob) throw new Error("sheet-capture-failed");
   return blob;
@@ -107,11 +113,10 @@ export async function exportProposalPdf(opts: {
   const sheets = [...document.querySelectorAll<HTMLElement>(".sheet")];
   if (!sheets.length) throw new Error("no-sheets");
 
-  root.classList.add("is-exporting");
+  root.classList.add("is-capturing");
   sheets.forEach((sheet) => {
     sheet.classList.add("is-on");
     sheet.style.opacity = "1";
-    sheet.style.transform = "none";
   });
 
   try {
@@ -131,16 +136,16 @@ export async function exportProposalPdf(opts: {
       await wait(40);
       await waitImages(sheet);
 
-      const blob = await captureSheet(sheet, fontEmbedCSS);
+      const { w, h } = sheetSize(sheet);
+      const blob = await captureSheet(sheet, fontEmbedCSS, w, h);
       const bytes = new Uint8Array(await blob.arrayBuffer());
       const image = await pdf.embedPng(bytes);
-      const page = pdf.addPage([A4_W, A4_H]);
-      const size = image.scaleToFit(A4_W, A4_H);
+      const page = pdf.addPage([w, h]);
       page.drawImage(image, {
-        x: (A4_W - size.width) / 2,
-        y: (A4_H - size.height) / 2,
-        width: size.width,
-        height: size.height,
+        x: 0,
+        y: 0,
+        width: w,
+        height: h,
       });
     }
 
@@ -150,6 +155,6 @@ export async function exportProposalPdf(opts: {
     downloadPdf(out, opts.filename);
     report("done", sheets.length, sheets.length);
   } finally {
-    root.classList.remove("is-exporting");
+    root.classList.remove("is-capturing");
   }
 }

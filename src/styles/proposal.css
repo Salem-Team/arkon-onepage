@@ -182,6 +182,16 @@
   padding: 6px 10px;
   border-radius: 999px;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tick-n {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+}
+.tick-l {
+  letter-spacing: 0.08em;
 }
 .ticks button.is-on {
   color: #ffffff;
@@ -453,7 +463,7 @@ html.is-flow:not(.is-exporting) .stage + .stage {
     height: 100%;
     margin: 0;
     gap: clamp(32px, 4cqi, 64px);
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
   }
 }
@@ -462,9 +472,9 @@ html.is-flow:not(.is-exporting) .stage + .stage {
 @media (max-width: 1200px) {
   html.is-flow:not(.is-exporting) .stage {
     height: auto !important;
-    min-height: calc(100svh - var(--chrome-h) - var(--pager-h)) !important;
+    min-height: 0 !important;
     max-height: none !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
   html.is-flow:not(.is-exporting) .sheet-fit,
   html.is-flow:not(.is-exporting) .sheet-scale,
@@ -484,9 +494,9 @@ html.is-flow:not(.is-exporting) .stage + .stage {
   html.is-flow:not(.is-exporting) .sheet {
     width: 100% !important;
     height: auto !important;
-    min-height: calc(100svh - var(--chrome-h) - var(--pager-h)) !important;
+    min-height: 0 !important;
     max-height: none !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     container-type: inline-size !important;
   }
   html.is-flow:not(.is-exporting) .sheet-pad {
@@ -528,6 +538,15 @@ html[dir="rtl"] .sheet-scale {
   top: 0;
   right: 0;
   transform-origin: top right;
+}
+html.is-doc-scroll[dir="rtl"] .sheet-scale,
+html.is-flow.is-doc-scroll[dir="rtl"] .sheet-scale {
+  position: relative;
+  top: auto;
+  right: auto;
+  left: 0;
+  transform: none;
+  transform-origin: top left;
 }
 
 .sheet {
@@ -1059,9 +1078,19 @@ html[dir="rtl"] .sheet-scale {
 }
 .cover.cover-logos {
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   gap: clamp(28px, 4vw, 56px);
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+.cover.cover-logos .cover-top::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 1px;
+  margin: 18px auto 0;
+  background: rgba(184, 198, 224, 0.5);
 }
 .cover-aura {
   position: absolute;
@@ -1092,28 +1121,38 @@ html[dir="rtl"] .sheet-scale {
 .cover-marks {
   position: relative;
   z-index: 1;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: clamp(24px, 5vw, 72px);
-  flex-wrap: wrap;
+  justify-items: center;
+  gap: clamp(16px, 4vw, 72px);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 .cover-marks figure {
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
 }
-.cover-mark-arkon {
-  height: clamp(56px, 8vw, 96px);
-  width: auto;
+.cover-mark-arkon,
+.cover-mark-rootk {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: clamp(48px, 8vw, 96px);
+  object-fit: contain;
+  object-position: center;
   filter: brightness(0) invert(1);
 }
 .cover-mark-rootk {
-  width: clamp(120px, 16vw, 220px);
-  height: auto;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
+  max-height: clamp(36px, 6vw, 72px);
+  max-width: 78%;
 }
 .cover-x {
   font-family: var(--font-display);
@@ -1221,15 +1260,38 @@ html[dir="rtl"] .sheet-scale {
   position: relative;
   z-index: 1;
   font-family: var(--font-display);
-  font-size: clamp(28px, 4.2vw, 52px);
+  font-size: clamp(22px, 4.2vw, 52px);
   font-weight: 800;
   letter-spacing: 0.02em;
   line-height: 1.25;
   text-transform: none;
   color: var(--white);
   opacity: 0.96;
-  margin: 0;
+  margin: 0 auto;
   text-align: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-inline: 8px;
+  overflow-wrap: anywhere;
+}
+.cover-sub {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.8vw, 22px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  color: var(--champagne);
+  opacity: 0.92;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  max-width: min(36ch, 100%);
+  box-sizing: border-box;
+  padding-inline: 12px;
+  overflow-wrap: anywhere;
 }
 .cover .erp,
 .close .erp {
@@ -1332,6 +1394,21 @@ html[dir="rtl"] .sheet-scale {
   white-space: pre-line;
   max-width: 46ch;
   margin-inline: auto;
+}
+.close-pledge {
+  font-family: var(--font-ui);
+  font-size: clamp(13px, 1.15vw, 16px);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  background: linear-gradient(165deg, #163A86, #091E52);
+  border: 1px solid rgba(224, 194, 138, 0.45);
+  padding: 10px 18px;
+  max-width: 52ch;
+  margin-inline: auto;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .chapter {
@@ -1560,6 +1637,14 @@ html[dir="rtl"] .sheet-scale {
   z-index: 2;
   min-height: 0;
 }
+.close-lead,
+.close-offer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: inherit;
+  min-width: 0;
+}
 .close .cover-flow.is-close { width: 100%; text-align: start; }
 .close-kicker {
   font-family: var(--font-ui);
@@ -1568,6 +1653,13 @@ html[dir="rtl"] .sheet-scale {
   letter-spacing: 0.22em;
   color: var(--champagne);
   margin: 0;
+}
+.close-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
 }
 .close h1 {
   font-family: var(--font-display);
@@ -1713,11 +1805,12 @@ html:not(.is-exporting) .close-pkgs.is-one {
 }
 .close-offer-note {
   font-family: var(--font-ui);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.4;
   color: var(--champagne);
-  max-width: 22ch;
+  max-width: none;
+  flex: 1 1 100%;
 }
 .close-amt {
   display: flex;
@@ -1898,7 +1991,9 @@ html:not(.is-exporting) .close-amt i {
 }
 .close-legal p {
   margin: 0;
-  align-self: end;
+  align-self: center;
+  width: 100%;
+  text-align: center;
   color: rgba(245, 241, 232, 0.4);
   padding-bottom: 1px;
 }
@@ -2992,6 +3087,38 @@ html[dir="rtl"] .mf-arr { transform: scaleX(-1); }
     font-size: clamp(28px, 3.4cqi, 52px);
     margin: 0;
   }
+  html:not(.is-exporting) .cover.cover-logos {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(28px, 3.8cqi, 52px);
+  }
+  html:not(.is-exporting) .cover.cover-logos .cover-top {
+    font-size: clamp(34px, 4.2cqi, 58px);
+    max-width: 16ch;
+  }
+  html:not(.is-exporting) .cover.cover-logos .cover-sub {
+    font-size: clamp(16px, 1.5cqi, 22px);
+    max-width: 32ch;
+  }
+  html:not(.is-exporting) .cover-mark-arkon {
+    height: clamp(72px, 8.5cqi, 108px);
+  }
+  html:not(.is-exporting) .cover-mark-rootk {
+    width: clamp(120px, 13cqi, 176px);
+  }
+  html:not(.is-exporting) .cover-x {
+    font-size: clamp(36px, 4.2cqi, 56px);
+  }
+  html:not(.is-exporting) .cover-marks {
+    gap: clamp(28px, 4cqi, 64px);
+  }
   html:not(.is-exporting) .cover-copy .cover-logo {
     align-self: flex-start;
     margin-top: 2px;
@@ -3103,20 +3230,60 @@ html[dir="rtl"] .mf-arr { transform: scaleX(-1); }
 
   html:not(.is-exporting) .close-viz { display: none; }
   html:not(.is-exporting) .close {
-    gap: clamp(6px, 0.9vh, 12px);
-    padding: clamp(2px, 0.4vh, 8px) 0;
-    justify-content: flex-start;
-    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.92fr);
+    grid-template-areas:
+      "lead offer"
+      "legal legal";
+    gap: clamp(18px, 2.2cqi, 36px) clamp(28px, 3.4cqi, 56px);
+    align-items: center;
+    padding: clamp(4px, 0.6vh, 10px) 0;
+    justify-content: stretch;
+    max-width: min(1180px, 100%);
     width: 100%;
     margin-inline: auto;
     min-height: 0;
     height: 100%;
     overflow: hidden;
   }
+  html:not(.is-exporting) .close-lead {
+    grid-area: lead;
+    align-items: flex-start;
+    text-align: start;
+    gap: clamp(8px, 1.1cqh, 14px);
+  }
+  html:not(.is-exporting) .close-brand {
+    justify-content: flex-start;
+  }
+  html:not(.is-exporting) .close-offer {
+    grid-area: offer;
+    gap: 14px;
+  }
+  html:not(.is-exporting) .close-legal {
+    grid-area: legal;
+  }
+  html:not(.is-exporting) .close-lead .close-kicker,
+  html:not(.is-exporting) .close-lead .erp,
+  html:not(.is-exporting) .close-lead h1,
+  html:not(.is-exporting) .close-lead .close-line {
+    text-align: start;
+    margin-inline: 0;
+  }
+  html:not(.is-exporting) .close-pledge {
+    margin-inline: 0;
+    text-align: start;
+    max-width: 42ch;
+  }
+  html:not(.is-exporting) .close-pkgs.is-one,
+  html:not(.is-exporting) .close-pkgs {
+    grid-template-columns: 1fr !important;
+    max-width: none;
+    width: 100%;
+  }
   html:not(.is-exporting) .close-access {
     width: 100%;
-    max-width: min(760px, 100%);
-    margin-inline: auto;
+    max-width: none;
+    margin-inline: 0;
     flex-shrink: 0;
     position: relative;
     z-index: 2;
@@ -3128,22 +3295,21 @@ html[dir="rtl"] .mf-arr { transform: scaleX(-1); }
     margin-top: 2px;
   }
   html:not(.is-exporting) .close-rootk {
-    width: clamp(36px, 3.2cqi, 56px);
-    height: clamp(36px, 3.2cqi, 56px);
+    width: clamp(52px, 4.4cqi, 76px);
+    height: auto;
   }
-  html:not(.is-exporting) .close h1 { font-size: clamp(26px, 3.1cqi, 56px); }
+  html:not(.is-exporting) .close h1 { font-size: clamp(36px, 3.4cqi, 64px); }
   html:not(.is-exporting) .close-line {
     font-size: clamp(15px, 1.35cqi, 26px);
-    max-width: 58ch;
+    max-width: 42ch;
     margin-block: 2px;
-    margin-inline: auto;
+    margin-inline: 0;
   }
   html:not(.is-exporting) .close-pkgs {
     gap: clamp(10px, 1.1vw, 16px);
     flex: 0 0 auto;
     min-height: 0;
     align-items: stretch;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     overflow: visible;
   }
   html:not(.is-exporting) .close-legal {
@@ -3336,21 +3502,23 @@ html[dir="rtl"] .mf-arr { transform: scaleX(-1); }
   html:not(.is-exporting) .close-legal {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
     gap: 8px;
     width: 100%;
     max-width: none;
     margin-top: 4px;
     margin-inline: 0;
-    text-align: start;
+    text-align: center;
     padding: 10px 12px 12px;
   }
   html:not(.is-exporting) .close-legal > div {
-    text-align: start;
+    text-align: center;
   }
   html:not(.is-exporting) .close-legal p {
-    text-align: start;
+    text-align: center;
+    align-self: center;
+    width: 100%;
     padding-top: 2px;
   }
   html:not(.is-exporting) .close-toast {
@@ -3566,6 +3734,11 @@ html[dir="rtl"] .mf-arr { transform: scaleX(-1); }
     display: block;
     font-size: clamp(24px, 6.4vw, 40px);
   }
+  html:not(.is-exporting) .cover.cover-logos .cover-sub {
+    display: block;
+    font-size: clamp(14px, 3.6vw, 18px);
+    max-width: 28ch;
+  }
   html:not(.is-exporting) .cover-rootk {
     width: 44px;
     height: 44px;
@@ -3748,148 +3921,35 @@ html[dir="rtl"] .mf-arr { transform: scaleX(-1); }
   }
 }
 
-html.is-exporting,
-html.is-exporting body,
-html.is-exporting #root,
-html.is-exporting .doc {
-  height: auto !important;
-  max-height: none !important;
-  overflow: visible !important;
-}
-html.is-exporting .doc { display: block; }
-html.is-exporting .chrome,
-html.is-exporting .pager { display: none !important; }
-html.is-exporting .deck {
-  overflow: visible !important;
-  height: auto;
-  width: 1280px;
-  margin: 0 auto;
-  position: relative !important;
-}
-html.is-exporting .deck-track {
-  position: relative !important;
-  inset: auto !important;
-  top: auto !important;
-  width: auto !important;
-  height: auto !important;
-  transform: none !important;
-  transition: none !important;
-}
-html.is-exporting .stage {
-  height: auto;
-  min-height: 0;
-  max-height: none;
-  display: block;
-  padding: 0;
-  overflow: visible;
-}
-html.is-exporting .sheet-fit,
-html.is-exporting .sheet-scale {
-  width: 1280px;
-  height: 720px;
-  overflow: visible;
-  transform: none;
-}
-html.is-exporting {
-  --fit: 1;
-}
-html.is-exporting .sheet {
-  position: relative;
-  width: 1280px;
-  height: 720px;
-  min-height: 720px;
-  max-height: 720px;
-  transform: none !important;
-}
-html.is-exporting .rise,
-html.is-exporting .dn,
-html.is-exporting .mind-b,
-html.is-exporting .cover-life li,
-html.is-exporting .pipe li,
-html.is-exporting .road li,
-html.is-exporting .funnel li,
-html.is-exporting .sheet,
-html.is-exporting .sheet.is-on {
-  opacity: 1 !important;
-  transform: none !important;
+/* Capture the live page as-is. Do not restyle sheets, cover, or artboard size. */
+html.is-capturing .rise,
+html.is-capturing .dn,
+html.is-capturing .mind-b,
+html.is-capturing .cover-life li,
+html.is-capturing .pipe li,
+html.is-capturing .road li,
+html.is-capturing .funnel li,
+html.is-capturing .feat-grid > li,
+html.is-capturing .cover-top,
+html.is-capturing .cover-marks figure,
+html.is-capturing .cover-x,
+html.is-capturing .cover-mark-arkon,
+html.is-capturing .cover-mark-rootk,
+html.is-capturing .hed-h,
+html.is-capturing .hed-l,
+html.is-capturing .close-kicker,
+html.is-capturing .close-rootk,
+html.is-capturing .close h1,
+html.is-capturing .close-line,
+html.is-capturing .close-pkg,
+html.is-capturing .close-amt,
+html.is-capturing .close-access,
+html.is-capturing .sheet.is-on {
   animation: none !important;
+  opacity: 1 !important;
 }
-html.is-exporting .sheet.is-on::before {
+html.is-capturing .sheet.is-on::before {
   display: none !important;
-}
-html.is-exporting .cover-aura,
-html.is-exporting .sheet--cover .sheet-wash::before {
-  display: none !important;
-}
-html.is-exporting .cover {
-  display: grid;
-  grid-template-columns: minmax(300px, 0.85fr) minmax(480px, 1.15fr);
-  grid-template-rows: auto;
-  width: min(1100px, 100%);
-  height: auto;
-  margin-inline: auto;
-  align-items: center;
-  align-content: center;
-  gap: 36px;
-  padding: 0;
-}
-html.is-exporting .cover-copy {
-  align-items: flex-start;
-  text-align: start;
-  justify-content: center;
-  height: 100%;
-  gap: 20px;
-}
-html.is-exporting .cover-brand,
-html.is-exporting .cover-msg {
-  align-items: flex-start;
-  text-align: start;
-}
-html.is-exporting .cover-copy .cover-logo { align-self: flex-start; }
-html.is-exporting .cover .product { font-size: 64px; }
-html.is-exporting .cover h1 {
-  font-size: 26px;
-  max-width: 16ch;
-  margin: 0;
-  text-align: start;
-}
-html.is-exporting .cover .lede {
-  font-size: 16px;
-  margin: 0;
-  text-align: start;
-}
-html.is-exporting .cover-rootk { width: 64px; height: 64px; }
-html.is-exporting .cover-aside {
-  height: 100%;
-  padding-inline-start: 28px;
-  border-inline-start: 1px solid rgba(184, 198, 224, 0.22);
-}
-html.is-exporting .cover-mods { text-align: start; }
-html.is-exporting .cover-grid {
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, auto);
-  height: auto;
-  gap: 12px;
-}
-html.is-exporting .cover-grid .tile {
-  flex-direction: row !important;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: start;
-  height: auto;
-  min-height: 108px;
-  padding: 16px 18px;
-  gap: 14px;
-}
-html.is-exporting .cover-grid .tile::before {
-  position: absolute;
-  top: 10px;
-  inset-inline-end: 10px;
-  margin: 0;
-}
-html.is-exporting .cover-grid .tile-copy {
-  align-items: flex-start;
-  text-align: start;
 }
 
 .xpdf {
@@ -4069,6 +4129,7 @@ html.is-exporting .cover-grid .tile-copy {
   .close-rootk { width: auto; height: 44px; }
   .close h1 { font-size: 34px; }
   .close-line { font-size: 15px; }
+  .close-pledge { font-size: 13px; padding: 8px 14px; }
 }
 
 @keyframes rk-enter {
@@ -4123,7 +4184,7 @@ html.is-exporting .cover-grid .tile-copy {
 html.is-flow:not(.is-exporting) .sheet--cover .sheet-wash::before {
   content: "";
   position: absolute;
-  inset: -12%;
+  inset: 0;
   pointer-events: none;
   background: radial-gradient(ellipse 48% 42% at 50% 44%, rgba(91, 158, 255, 0.2), transparent 68%);
   animation: rk-wash-glow 14s ease-in-out infinite;
@@ -4139,6 +4200,9 @@ html.is-flow:not(.is-exporting) .sheet.is-on .cover-aura .cover-orb-b {
 }
 html.is-flow:not(.is-exporting) .sheet.is-on .cover-top {
   animation: rk-cover-in 1.15s var(--ease-out) both;
+}
+html.is-flow:not(.is-exporting) .sheet.is-on .cover-sub {
+  animation: rk-cover-in 1.2s 0.32s var(--ease-out) both;
 }
 html.is-flow:not(.is-exporting) .sheet.is-on .cover-marks figure:first-of-type {
   animation: rk-cover-in 1.25s 0.12s var(--ease-out) both;
@@ -4172,6 +4236,10 @@ html.is-flow:not(.is-exporting) .sheet.is-on .feat-grid > li:nth-child(7) { anim
 html.is-flow:not(.is-exporting) .sheet.is-on .feat-grid > li:nth-child(8) { animation-delay: 0.34s; }
 html.is-flow:not(.is-exporting) .sheet.is-on .feat-grid > li:nth-child(9) { animation-delay: 0.38s; }
 html.is-flow:not(.is-exporting) .sheet.is-on .feat-grid > li:nth-child(10) { animation-delay: 0.42s; }
+html.is-flow:not(.is-exporting) .sheet.is-on .feat-grid > li:nth-child(11) { animation-delay: 0.46s; }
+html.is-flow:not(.is-exporting) .sheet.is-on .feat-grid > li:nth-child(12) { animation-delay: 0.5s; }
+html.is-flow:not(.is-exporting) .sheet.is-on .feat-grid > li:nth-child(13) { animation-delay: 0.54s; }
+html.is-flow:not(.is-exporting) .sheet.is-on .feat-grid > li:nth-child(14) { animation-delay: 0.58s; }
 html.is-flow:not(.is-exporting) .sheet.is-on .close-kicker {
   animation: rk-enter 0.5s var(--ease) both;
 }
@@ -4183,6 +4251,9 @@ html.is-flow:not(.is-exporting) .sheet.is-on .close h1 {
 }
 html.is-flow:not(.is-exporting) .sheet.is-on .close-line {
   animation: rk-enter 0.6s 0.12s var(--ease) both;
+}
+html.is-flow:not(.is-exporting) .sheet.is-on .close-pledge {
+  animation: rk-enter 0.6s 0.14s var(--ease) both;
 }
 html.is-flow:not(.is-exporting) .sheet.is-on .close-pkg {
   animation: rk-enter 0.7s 0.16s var(--ease) both;
@@ -4204,6 +4275,7 @@ html.is-flow:not(.is-exporting) .feat-grid > li:hover {
 
 @media (prefers-reduced-motion: reduce) {
   html.is-flow:not(.is-exporting) .sheet.is-on .cover-top,
+  html.is-flow:not(.is-exporting) .sheet.is-on .cover-sub,
   html.is-flow:not(.is-exporting) .sheet.is-on .cover-marks figure,
   html.is-flow:not(.is-exporting) .sheet.is-on .cover-x,
   html.is-flow:not(.is-exporting) .sheet.is-on .cover-mark-arkon,
@@ -4218,6 +4290,7 @@ html.is-flow:not(.is-exporting) .feat-grid > li:hover {
   html.is-flow:not(.is-exporting) .sheet.is-on .close-rootk,
   html.is-flow:not(.is-exporting) .sheet.is-on .close h1,
   html.is-flow:not(.is-exporting) .sheet.is-on .close-line,
+  html.is-flow:not(.is-exporting) .sheet.is-on .close-pledge,
   html.is-flow:not(.is-exporting) .sheet.is-on .close-pkg,
   html.is-flow:not(.is-exporting) .sheet.is-on .close-amt,
   html.is-flow:not(.is-exporting) .sheet.is-on .close-access {
@@ -4227,5 +4300,324 @@ html.is-flow:not(.is-exporting) .feat-grid > li:hover {
   }
   html.is-flow:not(.is-exporting) .sheet--cover.is-on .skyline {
     opacity: 0.18 !important;
+  }
+}
+
+/* Mobile / tablet: readable layout, no clip, always-on pager */
+@media (max-width: 1200px) {
+  html.is-flow:not(.is-exporting) {
+    --chrome-h: 58px;
+    --pager-h: 68px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  html.is-flow:not(.is-exporting) img {
+    max-width: 100%;
+    height: auto;
+  }
+  html.is-flow:not(.is-exporting) button {
+    touch-action: manipulation;
+  }
+  html.is-flow:not(.is-exporting) .stage,
+  html.is-flow:not(.is-exporting) .sheet,
+  html.is-flow:not(.is-exporting) .sheet-body,
+  html.is-flow:not(.is-exporting) .sheet-pad,
+  html.is-flow:not(.is-exporting) .sheet-body .pg,
+  html.is-flow:not(.is-exporting) .pg-feats {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+  html.is-flow:not(.is-exporting) .sheet {
+    min-height: 0 !important;
+  }
+  html.is-flow:not(.is-exporting) .sheet:has(.cover) {
+    min-height: calc(100svh - var(--chrome-h) - var(--pager-h)) !important;
+  }
+  html.is-flow:not(.is-exporting) .chrome {
+    position: sticky !important;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: auto !important;
+    min-height: calc(52px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: 8px;
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
+    gap: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+  }
+  html.is-flow:not(.is-exporting) .ticks {
+    display: flex !important;
+    order: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
+    justify-content: flex-start;
+    gap: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  html.is-flow:not(.is-exporting) .tick-l {
+    display: none;
+  }
+  html.is-flow:not(.is-exporting) .ticks button {
+    flex: 0 0 auto;
+    width: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    justify-content: center;
+  }
+  html.is-flow:not(.is-exporting) .chrome-meta {
+    order: 0;
+    width: auto;
+    margin-inline-start: auto;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  html.is-flow:not(.is-exporting) .chrome-pg {
+    display: none !important;
+  }
+  html.is-flow:not(.is-exporting) .chrome-pdf {
+    min-height: 40px;
+    padding: 0 12px 0 10px;
+  }
+  html.is-flow:not(.is-exporting) .lang {
+    min-width: 84px;
+  }
+  html.is-flow:not(.is-exporting) .lang button {
+    min-height: 32px;
+    padding: 6px 8px;
+  }
+  html.is-flow:not(.is-exporting) .pager {
+    position: fixed !important;
+    bottom: 0 !important;
+    inset-inline: 0;
+    z-index: 60;
+    height: auto !important;
+    padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: rgba(8, 12, 20, 0.94);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(13, 42, 110, 0.22);
+    pointer-events: auto;
+  }
+  html.is-flow:not(.is-exporting) .pager-inner {
+    width: 100%;
+    max-width: 520px;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 4px;
+  }
+  html.is-flow:not(.is-exporting) .pager button {
+    flex: 1 1 0;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+  html.is-flow:not(.is-exporting) .pager span {
+    min-width: 64px;
+    font-size: 12px;
+  }
+  html.is-flow:not(.is-exporting) .sheet-pad {
+    padding: 16px 16px calc(24px + var(--pager-h) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  html.is-flow:not(.is-exporting) .sheet-head {
+    gap: 8px;
+    padding-bottom: 8px;
+  }
+  html.is-flow:not(.is-exporting) .hed {
+    margin-bottom: 8px;
+  }
+  html.is-flow:not(.is-exporting) .hed-h {
+    font-size: clamp(20px, 6vw, 26px);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+  html.is-flow:not(.is-exporting) .hed-l {
+    font-size: 14px;
+    line-height: 1.55;
+    margin-top: 6px;
+  }
+  html.is-flow:not(.is-exporting) .cover.cover-logos {
+    overflow: hidden;
+    gap: 22px;
+    padding: 12px 4px 8px;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    max-width: 100%;
+  }
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-top {
+    font-size: clamp(20px, 6.2vw, 30px);
+    line-height: 1.4;
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 8px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  html.is-flow:not(.is-exporting) .cover.cover-logos .cover-sub {
+    font-size: clamp(14px, 3.8vw, 17px);
+    line-height: 1.55;
+    width: 100%;
+    max-width: min(28ch, 100%);
+    padding-inline: 12px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  html.is-flow:not(.is-exporting) .cover-marks {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+    max-width: 100%;
+    gap: 12px;
+    padding-inline: 0;
+  }
+  html.is-flow:not(.is-exporting) .cover-marks figure {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  html.is-flow:not(.is-exporting) .cover-mark-arkon {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 48px;
+    object-fit: contain;
+    object-position: center;
+    margin-inline: auto;
+  }
+  html.is-flow:not(.is-exporting) .cover-mark-rootk {
+    display: block;
+    width: auto;
+    max-width: 72%;
+    height: 34px;
+    object-fit: contain;
+    object-position: center;
+    margin-inline: auto;
+  }
+  html.is-flow:not(.is-exporting) .cover-x {
+    font-size: clamp(22px, 6vw, 32px);
+    flex-shrink: 0;
+  }
+  html.is-flow:not(.is-exporting) .close {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    gap: 16px;
+    text-align: start;
+  }
+  html.is-flow:not(.is-exporting) .close-lead,
+  html.is-flow:not(.is-exporting) .close-offer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  html.is-flow:not(.is-exporting) .close-kicker,
+  html.is-flow:not(.is-exporting) .close .erp,
+  html.is-flow:not(.is-exporting) .close h1,
+  html.is-flow:not(.is-exporting) .close-line {
+    text-align: start;
+  }
+  html.is-flow:not(.is-exporting) .close h1 {
+    font-size: clamp(32px, 10vw, 44px);
+  }
+  html.is-flow:not(.is-exporting) .close-line {
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: none;
+    margin-inline: 0;
+  }
+  html.is-flow:not(.is-exporting) .close-pledge {
+    font-size: 14px;
+    line-height: 1.55;
+    padding: 12px 14px;
+    max-width: none;
+    margin-inline: 0;
+    text-align: start;
+  }
+  html.is-flow:not(.is-exporting) .close-pkgs,
+  html.is-flow:not(.is-exporting) .close-pkgs.is-one,
+  html:not(.is-exporting) .close-pkgs.is-one {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    width: 100%;
+    max-width: none;
+  }
+  html.is-flow:not(.is-exporting) .close-pkg {
+    padding: 18px 14px 16px;
+  }
+  html.is-flow:not(.is-exporting) .close-inc {
+    gap: 8px;
+    margin-top: 12px;
+  }
+  html.is-flow:not(.is-exporting) .close-inc li {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  html.is-flow:not(.is-exporting) .close-amt,
+  html.is-flow:not(.is-exporting) .close-pkg.is-hot .close-amt {
+    font-size: clamp(30px, 9vw, 40px);
+  }
+  html.is-flow:not(.is-exporting) .close-offer-note {
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+  html.is-flow:not(.is-exporting) .close-access {
+    padding: 14px;
+  }
+  html.is-flow:not(.is-exporting) .close-creds {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  html.is-flow:not(.is-exporting) .copy-row {
+    padding: 10px 12px;
+  }
+  html.is-flow:not(.is-exporting) .copy-value strong {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+  }
+  html.is-flow:not(.is-exporting) .copy-label {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 639px) {
+  html.is-flow:not(.is-exporting) .ticks button {
+    width: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 10px;
+  }
+  html.is-flow:not(.is-exporting) .sheet-pad {
+    padding: 16px 16px calc(22px + var(--pager-h) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  html.is-flow:not(.is-exporting) .cover.cover-logos {
+    gap: 20px;
+  }
+  html.is-flow:not(.is-exporting) .chrome-pdf span {
+    display: none;
+  }
+}
+@media (hover: none) {
+  html.is-flow:not(.is-exporting) .feat-grid > li:hover {
+    transform: none;
+    box-shadow: none;
   }
 }
