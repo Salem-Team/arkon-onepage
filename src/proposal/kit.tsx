@@ -121,37 +121,38 @@ export function Hed({ kicker, title, lede, wide }: { kicker?: Tx; title: Tx; led
 export function CoverBody() {
   const { lang } = useLang();
   return (
-    <div className="cover is-min">
+    <div className="cover">
       <div className="cover-copy">
-        <p className="cover-top" dir="ltr">
-          ARKON × ROOTK
-        </p>
-        <img className="cover-rootk" src="/assets/rootk-mark-light.svg" alt="ROOTK" />
-        <p className="product" dir="ltr">
-          ROOTK
-        </p>
-        <p className="erp" dir={lang === "ar" ? "rtl" : "ltr"}>
-          {lang === "ar" ? "نظام تشغيل عقاري" : "Real Estate ERP"}
-        </p>
-        <h1>
-          {lang === "ar" ? "نظام التشغيل العقاري المتكامل." : "The connected real-estate operating system."}
-        </h1>
-        <p className="lede">
-          {lang === "ar" ? "من الليد لإتمام البيع — منظومة واحدة." : "From Lead to Closed Won — one system."}
-        </p>
-        <p className="cover-tag" dir={lang === "ar" ? "rtl" : "ltr"}>
-          {lang === "ar" ? "بيزنس واحد. منظومة واحدة مترابطة." : "ONE BUSINESS. ONE CONNECTED SYSTEM."}
-        </p>
+        <div className="cover-brand">
+          <p className="cover-top" dir="ltr">
+            ARKON × ROOTK
+          </p>
+          <img className="cover-rootk" src="/assets/rootk-mark-light.svg" alt="ROOTK" />
+          <p className="product" dir="ltr">
+            ROOTK
+          </p>
+        </div>
+        <div className="cover-msg">
+          <h1>
+            {lang === "ar" ? "نظام التشغيل العقاري المتكامل." : "The connected real-estate operating system."}
+          </h1>
+          <p className="lede">
+            {lang === "ar" ? "من الليد لإتمام البيع — منظومة واحدة." : "From Lead to Closed Won — one system."}
+          </p>
+        </div>
         <img className="cover-logo" src="/assets/arkon-logo@2x.png" alt="Arkon" />
       </div>
-      <div className="cover-aside" aria-hidden="true">
-        <Tile icon="handshake" en="Commercial" ar="التجاري" />
-        <Tile icon="building" en="Operations" ar="التشغيل" />
-        <Tile icon="megaphone" en="Marketing" ar="التسويق" />
-        <Tile icon="ledger" en="Finance" ar="المالية" />
-        <Tile icon="people" en="People" ar="الأفراد" />
-        <Tile icon="chart" en="Management" ar="الإدارة" />
-      </div>
+      <aside className="cover-aside">
+        <p className="cover-mods">{lang === "ar" ? "وحدات المنظومة" : "System units"}</p>
+        <div className="cover-grid">
+          <Tile icon="handshake" en="Commercial" ar="التجاري" />
+          <Tile icon="building" en="Operations" ar="التشغيل" />
+          <Tile icon="megaphone" en="Marketing" ar="التسويق" />
+          <Tile icon="ledger" en="Finance" ar="المالية" />
+          <Tile icon="people" en="People" ar="الأفراد" />
+          <Tile icon="chart" en="Management" ar="الإدارة" />
+        </div>
+      </aside>
     </div>
   );
 }

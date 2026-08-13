@@ -30,7 +30,7 @@ export const PACKAGES: {
     tag: "Option 01",
     title: { ar: "نظام الويب", en: "Web system" },
     desc: { ar: "منصّة ERP كاملة على الويب — جاهزة للتشغيل", en: "Full ERP platform on web — ready to operate" },
-    amount: "200,000",
+    amount: "150,000",
     items: [
       { ar: "منصّة ERP كاملة على الويب لكل فرق المبيعات والإدارة", en: "Full ERP platform on web for sales and management teams" },
       { ar: "تهيئة الهوية البصرية وإعداد التشغيل", en: "Visual identity setup and operational configuration" },

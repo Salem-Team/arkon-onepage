@@ -172,104 +172,102 @@ export function PageView({ page }: { page: ContentPage }) {
 
     case "layers":
       return (
-        <div className="pg pg-journey">
-          {(
-            [
-              {
-                key: "comm",
-                title: tx("المحرك التجاري", "Commercial engine"),
-                steps: [
-                  { icon: "megaphone" as const, en: "Marketing", ar: "الحملة" },
-                  { icon: "lead" as const, en: "Lead", ar: "الليد" },
-                  { icon: "assign" as const, en: "Assignment", ar: "التوزيع" },
-                  { icon: "target" as const, en: "Qualify", ar: "التأهيل" },
-                  { icon: "handshake" as const, en: "Opportunity", ar: "فرصة البيع" },
-                  { icon: "match" as const, en: "Matching", ar: "المطابقة" },
-                  { icon: "lock" as const, en: "Reservation", ar: "الحجز" },
-                  { icon: "won" as const, en: "Closed Won", ar: "إتمام البيع", hot: true },
-                ],
-              },
-              {
-                key: "fin",
-                title: tx("المحرك المالي", "Financial engine"),
-                steps: [
-                  { icon: "contract" as const, en: "Contract", ar: "العقد" },
-                  { icon: "calendar" as const, en: "Payment Plan", ar: "خطة السداد" },
-                  { icon: "receipt" as const, en: "Collections", ar: "التحصيل" },
-                  { icon: "percent" as const, en: "Commission", ar: "العمولة" },
-                  { icon: "ledger" as const, en: "Accounting", ar: "الحسابات" },
-                ],
-              },
-              {
-                key: "intel",
-                title: tx("رؤية الإدارة", "Executive view"),
-                steps: [
-                  { icon: "investor" as const, en: "Investor", ar: "المستثمر" },
-                  { icon: "chart" as const, en: "Reports", ar: "التقارير" },
-                  { icon: "radar" as const, en: "Intelligence", ar: "الإدارة" },
-                  { icon: "decision" as const, en: "Decision", ar: "القرار" },
-                ],
-              },
-            ] as const
-          ).map((band) => (
-            <section key={band.key} className={`j-band j-${band.key}`}>
-              <header className="j-band-h">
-                <H3 c={band.title} />
-              </header>
-              <ol className="j-rail">
-                {band.steps.map((s, i) => (
-                  <li key={s.en} className={"hot" in s && s.hot ? "is-hot" : undefined}>
-                    <em>{String(i + 1).padStart(2, "0")}</em>
-                    <span className="tile-ico">
-                      <Icon name={s.icon} />
-                    </span>
-                    <div>
-                      <b>{lang === "ar" ? s.ar : s.en}</b>
-                      <i dir="ltr">{lang === "ar" ? s.en : s.ar}</i>
-                    </div>
-                  </li>
+        <div className="pg pg-engines">
+          {(page.layers ?? []).map((band, bi) => {
+            const rows = bi === 0 ? [band.steps.slice(0, 4), band.steps.slice(4)] : [band.steps];
+            return (
+              <section key={band.title.en} className={`eng-band eng-${bi}`}>
+                {bi > 0 ? (
+                  <p className="eng-bridge">
+                    {lang === "ar" ? `↓ يسلّم لـ ${t(band.title)}` : `↓ hands off to ${t(band.title)}`}
+                  </p>
+                ) : null}
+                <header className="eng-h">
+                  <em>{String(bi + 1).padStart(2, "0")}</em>
+                  <H3 c={band.title} />
+                </header>
+                {rows.map((row, ri) => (
+                  <div key={`${band.title.en}-r${ri}`} className="eng-row-wrap">
+                    {ri > 0 ? (
+                      <p className="eng-continue">{lang === "ar" ? "↓ يكمل" : "↓ continues"}</p>
+                    ) : null}
+                    <ol className="eng-flow" style={{ ["--eng-cols" as string]: String(row.length) }}>
+                      {row.map((s, i) => {
+                        const n = String(ri * 4 + i + 1).padStart(2, "0");
+                        return (
+                          <li key={`${s.title.en}-${n}`} className={s.icon === "won" ? "is-hot" : undefined}>
+                            <em>{n}</em>
+                            <span className="tile-ico">
+                              <Icon name={s.icon} />
+                            </span>
+                            <b>{t(s.title)}</b>
+                            {i < row.length - 1 ? (
+                              <span className="eng-arr" aria-hidden="true">
+                                {lang === "ar" ? "←" : "→"}
+                              </span>
+                            ) : null}
+                          </li>
+                        );
+                      })}
+                    </ol>
+                  </div>
                 ))}
-              </ol>
-            </section>
-          ))}
-          <Cap
-            c={
-              page.value ??
-              tx(
-                "كل خطوة بتسلّم اللي بعدها جوه نفس النظام — من غير ما الشغل يتقطع.",
-                "Each step hands off to the next inside the same system — without breaking the work."
-              )
-            }
-          />
+              </section>
+            );
+          })}
+          <Cap c={page.value!} />
         </div>
       );
 
-    case "roadmap":
+    case "roadmap": {
+      const all = page.steps ?? [];
+      const bands = [
+        { key: "sale", title: tx("مسار البيع", "Sales path"), steps: all.slice(0, 11) },
+        { key: "after", title: tx("بعد إتمام البيع", "After closed won"), steps: all.slice(11) },
+      ];
       return (
-        <div className="pg pg-lead">
-          <div className="src">
-            <H3 c={tx("منين بييجي الليد", "Where the Lead comes from")} />
-            <Tile icon="megaphone" en="Campaigns" ar="الحملات" />
-            <Tile icon="portal" en="Website" ar="الموقع" />
-            <Tile icon="nodes" en="API" ar="ربط خارجي" />
-            <Tile icon="files" en="Import" ar="ملف" />
-            <Tile icon="lead" en="Manual" ar="تسجيل يدوي" />
-          </div>
-          <div className="src-flow">
-            <Arrow />
-            <Tile icon="lead" en="Lead" ar="سجل الفرصة" gold />
-            <Arrow />
-            <Tile icon="assign" en="Assignment" ar="تحديد المسؤول" />
-            <Arrow />
-            <Tile icon="target" en="Qualification" ar="فهم الاحتياج" />
-            <Arrow />
-            <Tile icon="clock" en="Follow-up" ar="المتابعة" />
-            <Arrow />
-            <Tile icon="handshake" en="Opportunity" ar="فرصة بيع" gold />
+        <div className="pg pg-track">
+          <p className="track-hint">
+            {lang === "ar" ? "١٦ خطوة متسلسلة — اقرأ من 01 إلى 16" : "16 sequential steps — read from 01 to 16"}
+          </p>
+          <div className="track-cols">
+            {bands.map((band) => (
+              <section key={band.key} className={`track-col track-${band.key}`}>
+                <header className="track-h">
+                  <H3 c={band.title} />
+                  <span>
+                    {band.key === "after"
+                      ? lang === "ar"
+                        ? `${band.steps[0]?.n} → ${band.steps[band.steps.length - 1]?.n} · يكمل من 11`
+                        : `${band.steps[0]?.n} → ${band.steps[band.steps.length - 1]?.n} · continues from 11`
+                      : `${band.steps[0]?.n} → ${band.steps[band.steps.length - 1]?.n}`}
+                  </span>
+                </header>
+                <div className="track-legend" aria-hidden="true">
+                  <span>{lang === "ar" ? "الخطوة" : "Step"}</span>
+                  <span>{lang === "ar" ? "بيحصل" : "Happens"}</span>
+                  <span>{lang === "ar" ? "يسلّم" : "Hands off"}</span>
+                </div>
+                <ol className="track-list">
+                  {band.steps.map((s, i) => (
+                    <li key={s.n ?? s.title.en} className={s.icon === "won" ? "is-hot" : undefined}>
+                      <em>{s.n ?? String(i + 1).padStart(2, "0")}</em>
+                      <span className="tile-ico">
+                        <Icon name={s.icon} />
+                      </span>
+                      <strong>{t(s.title)}</strong>
+                      {s.body ? <p>{t(s.body)}</p> : <p />}
+                      <b>{s.data ? t(s.data) : "—"}</b>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ))}
           </div>
           <Cap c={page.value!} />
         </div>
       );
+    }
 
     case "funnel":
       return (
@@ -338,63 +336,57 @@ export function PageView({ page }: { page: ContentPage }) {
             </ul>
           </article>
           <div className="record-flow">
-            <Tile icon="lead" en="Lead" ar="الليد" gold />
+            <Tile icon="lead" en="Lead" ar="الليد" gold body={tx("يشوف الاستفسار من أول ما يدخل", "Sees the inquiry the moment it enters")} />
             <Arrow />
-            <Tile icon="employee" en="Owner" ar="المسؤول" />
+            <Tile icon="employee" en="Owner" ar="المسؤول" body={tx("يمسك الملف ويعرف الخطوة الجاية", "Takes the file and knows the next step")} />
             <Arrow />
-            <Tile icon="clock" en="Follow-up" ar="المتابعة" />
+            <Tile icon="clock" en="Follow-up" ar="المتابعة" body={tx("يحافظ على التواصل من غير ما الليد يضيع", "Keeps contact alive so the Lead is not lost")} />
             <Arrow />
-            <Tile icon="pipeline" en="Pipeline" ar="البايبلاين" />
+            <Tile icon="pipeline" en="Pipeline" ar="البايبلاين" body={tx("يحرك المرحلة حسب شغل فعلي مسجّل", "Moves the stage based on recorded work")} />
             <Arrow />
-            <Tile icon="handshake" en="Opportunity" ar="فرصة البيع" gold />
+            <Tile icon="handshake" en="Opportunity" ar="فرصة البيع" gold body={tx("يفتح فرصة بيع واضحة للفريق", "Opens a clear sales opportunity for the team")} />
           </div>
           <Cap c={page.value!} />
         </div>
       );
 
-    case "pipeline":
+    case "pipeline": {
+      const stages = page.pipe ?? [];
       return (
-        <div className="pg pg-pipe">
-          {[
-            { n: "01", icon: "lead" as const, en: "Fresh Lead", ar: "ليد جديد", w: tx("دخول الاستفسار", "Inquiry enters"), r: tx("مصدر + مسؤول", "Source + Owner"), nx: tx("تواصل", "Contact") },
-            { n: "02", icon: "chat" as const, en: "Contacted", ar: "تم التواصل", w: tx("أول مكالمة أو رسالة", "First call or message"), r: tx("نتيجة التواصل", "Contact result"), nx: tx("تأهيل", "Qualify") },
-            { n: "03", icon: "target" as const, en: "Qualified", ar: "مؤهّل", w: tx("الاحتياج والجدية", "Need and seriousness"), r: tx("ميزانية + طلب", "Budget + need"), nx: tx("فرصة", "Opportunity") },
-            { n: "04", icon: "handshake" as const, en: "Opportunity", ar: "فرصة بيع", w: tx("فتح مسار بيع", "Open a sales path"), r: tx("مطابقة", "Matching"), nx: tx("اجتماع", "Meeting") },
-            { n: "05", icon: "search" as const, en: "Meeting", ar: "اجتماع / معاينة", w: tx("قرار العميل", "Client decision"), r: tx("وحدة مرشّحة", "Candidate unit"), nx: tx("حجز", "Reservation") },
-            { n: "06", icon: "lock" as const, en: "Reservation", ar: "الحجز", w: tx("قفل الوحدة", "Lock the unit"), r: tx("اعتماد", "Approval"), nx: tx("إتمام", "Close") },
-            { n: "07", icon: "won" as const, en: "Closed Won", ar: "إتمام البيع", w: tx("قفل الصفقة", "Lock the deal"), r: tx("قيمة + أطراف", "Value + parties"), nx: tx("عقد ومالية", "Contract & finance") },
-          ].map((s) => (
-            <article key={s.n} className={`pipe-st${s.n === "07" ? " is-gold" : ""}`}>
-              <em>{s.n}</em>
-              <span className="tile-ico">
-                <Icon name={s.icon} />
-              </span>
-              <span className="tile-en" dir={lang === "ar" ? "ltr" : "rtl"}>
-                {lang === "ar" ? s.en : s.ar}
-              </span>
-              <strong dir={lang === "ar" ? "rtl" : "ltr"}>{lang === "ar" ? s.ar : s.en}</strong>
-              <p>
-                {lang === "ar" ? "بيحصل: " : "Happens: "}
-                {t(s.w)}
-              </p>
-              <p>
-                {lang === "ar" ? "مطلوب: " : "Required: "}
-                {t(s.r)}
-              </p>
-              <b>
-                {lang === "ar" ? "بعدين: " : "Next: "}
-                {t(s.nx)}
-              </b>
-            </article>
-          ))}
+        <div className="pg pg-stages">
+          <div className="stg-head" aria-hidden="true">
+            <span>{lang === "ar" ? "المرحلة" : "Stage"}</span>
+            <span>{lang === "ar" ? "الغرض" : "Purpose"}</span>
+            <span>{lang === "ar" ? "الخطوة التالية" : "Next step"}</span>
+          </div>
+          <ol className="stg-list">
+            {stages.map((s, i) => (
+              <li key={s.n} className={s.icon === "won" ? "is-hot" : undefined}>
+                <em>{s.n}</em>
+                <span className="tile-ico">
+                  <Icon name={s.icon} />
+                </span>
+                <strong>{t(s.title)}</strong>
+                <p>{t(s.purpose)}</p>
+                <b>
+                  {i < stages.length - 1 ? (lang === "ar" ? "بعدين ← " : "Next → ") : ""}
+                  {t(s.next)}
+                </b>
+              </li>
+            ))}
+          </ol>
           <Cap
-            c={tx(
-              "البايبلاين مسار بيع كامل: كل مرحلة ليها شغل، شرط، وخطوة تالية.",
-              "The pipeline is a full sales path: work, condition, and a next step at every stage."
-            )}
+            c={
+              page.value ??
+              tx(
+                "البايبلاين مسار بيع كامل: كل مرحلة ليها شغل، وخطوة تالية واضحة.",
+                "The pipeline is a full sales path: work, and a clear next step at every stage."
+              )
+            }
           />
         </div>
       );
+    }
 
     case "inventory":
       return (

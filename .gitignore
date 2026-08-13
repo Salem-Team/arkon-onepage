@@ -8,6 +8,7 @@ dist/
 !.env.example
 .qa-laptop/
 .qa-scroll/
+.qa-large/
 *.pdf
 tsconfig.tsbuildinfo
 overlap-*.png

@@ -238,7 +238,7 @@ export function Proposal() {
         >
           <img className="arkon" src="/assets/arkon-logo@2x.png" alt="Arkon" />
           <span className="x">×</span>
-          <img className="rootk" src="/assets/rootk-logo.svg" alt="ROOTK" />
+          <img className="rootk" src="/assets/rootk-mark-light.svg" alt="ROOTK" />
         </a>
         <nav className="ticks" aria-label={lang === "ar" ? "فصول العرض" : "Proposal chapters"}>
           {CHAPTERS.filter((c) => c.id !== "close").map((c) => (
