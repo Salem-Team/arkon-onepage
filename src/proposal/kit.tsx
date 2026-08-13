@@ -1,9 +1,8 @@
 import { Check, Copy } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
-import { DEMO, LEGAL, PACKAGES } from "../data";
+import { LEGAL, PACKAGES } from "../data";
 import { useLang, type Tx } from "../lang";
-import { Skyline, type IconName } from "./icons";
-import { Tile } from "./ui";
+import { Skyline } from "./icons";
 import type { ChapterId, PageDef } from "./types";
 import { CHAPTERS } from "./types";
 
@@ -15,9 +14,9 @@ export function T({ c }: { c: Tx }) {
 export function Geom() {
   return (
     <svg className="geom-svg" viewBox="0 0 320 420" fill="none" aria-hidden="true">
-      <circle cx="168" cy="168" r="64" stroke="rgba(199,169,100,0.35)" />
-      <circle cx="168" cy="168" r="18" stroke="rgba(199,169,100,0.7)" />
-      <path d="M48 86 H268 M86 58 V360" stroke="rgba(199,169,100,0.2)" />
+      <circle cx="168" cy="168" r="64" stroke="rgba(91, 158, 255,0.35)" />
+      <circle cx="168" cy="168" r="18" stroke="rgba(91, 158, 255,0.7)" />
+      <path d="M48 86 H268 M86 58 V360" stroke="rgba(91, 158, 255,0.2)" />
     </svg>
   );
 }
@@ -66,7 +65,7 @@ export function Sheet({
     <div className={`stage${active ? " is-active" : ""}`} id={`p-${id}`} aria-hidden={!active}>
       <div className="sheet-fit">
         <div className="sheet-scale">
-          <article className={`sheet sheet--${tone}${on || active ? " is-on" : ""}`}>
+          <article className={`sheet sheet--${tone}${on || active ? " is-on" : ""}${id === "cover" ? " sheet--cover" : ""}`}>
             <div className="sheet-wash" />
             {tone === "ink" ? <Skyline /> : null}
             <div className="sheet-frame" />
@@ -121,50 +120,28 @@ export function Hed({ kicker, title, lede, wide }: { kicker?: Tx; title: Tx; led
 export function CoverBody() {
   const { lang } = useLang();
   return (
-    <div className="cover">
-      <div className="cover-copy">
-        <div className="cover-brand">
-          <p className="cover-top" dir="ltr">
-            ARKON × ROOTK
-          </p>
-          <img className="cover-rootk" src="/assets/rootk-mark-light.svg" alt="ROOTK" />
-          <p className="product" dir="ltr">
-            ROOTK
-          </p>
-        </div>
-        <div className="cover-msg">
-          <h1>
-            {lang === "ar" ? "نظام التشغيل العقاري المتكامل." : "The connected real-estate operating system."}
-          </h1>
-          <p className="lede">
-            {lang === "ar" ? "من الليد لإتمام البيع — منظومة واحدة." : "From Lead to Closed Won — one system."}
-          </p>
-        </div>
-        <img className="cover-logo" src="/assets/arkon-logo@2x.png" alt="Arkon" />
+    <div className="cover cover-logos">
+      <div className="cover-aura" aria-hidden="true">
+        <i className="cover-orb cover-orb-a" />
+        <i className="cover-orb cover-orb-b" />
       </div>
-      <aside className="cover-aside">
-        <p className="cover-mods">{lang === "ar" ? "وحدات المنظومة" : "System units"}</p>
-        <div className="cover-grid">
-          <Tile icon="handshake" en="Commercial" ar="التجاري" />
-          <Tile icon="building" en="Operations" ar="التشغيل" />
-          <Tile icon="megaphone" en="Marketing" ar="التسويق" />
-          <Tile icon="ledger" en="Finance" ar="المالية" />
-          <Tile icon="people" en="People" ar="الأفراد" />
-          <Tile icon="chart" en="Management" ar="الإدارة" />
-        </div>
-      </aside>
+      <p className="cover-top" dir={lang === "ar" ? "rtl" : "ltr"}>
+        {lang === "ar" ? "شراكه طويله الامد" : "Partnership for a long time"}
+      </p>
+      <div className="cover-marks">
+        <figure>
+          <img className="cover-mark-arkon" src="/assets/arkon-logo@2x.png" alt="Arkon" />
+        </figure>
+        <span className="cover-x" aria-hidden="true">
+          ×
+        </span>
+        <figure>
+          <img className="cover-mark-rootk" src="/assets/rootk-brand.png" alt="ROOTK" />
+        </figure>
+      </div>
     </div>
   );
 }
-
-const CLOSE_LIFE: { icon: IconName; en: string; ar: string }[] = [
-  { icon: "megaphone", en: "Marketing", ar: "التسويق" },
-  { icon: "handshake", en: "Sales", ar: "السيلز" },
-  { icon: "match", en: "Matching", ar: "المطابقة" },
-  { icon: "stack", en: "Inventory", ar: "المخزون" },
-  { icon: "won", en: "Closed Won", ar: "إتمام البيع" },
-  { icon: "radar", en: "Intelligence", ar: "الإدارة" },
-];
 
 function CopyField({
   label,
@@ -231,27 +208,18 @@ export function CloseBody() {
       <p className="close-kicker" dir={lang === "ar" ? "rtl" : "ltr"}>
         {lang === "ar" ? "ROOTK · الشريك التقني" : "ROOTK · TECHNICAL PARTNER"}
       </p>
-      <img className="close-rootk" src="/assets/rootk-mark-light.svg" alt="ROOTK" />
+      <img className="close-rootk" src="/assets/rootk-brand.png" alt="ROOTK" />
       <h1 dir="ltr">ROOTK</h1>
       <p className="erp" dir={lang === "ar" ? "rtl" : "ltr"}>
         {lang === "ar" ? "نظام تشغيل عقاري" : "Real Estate ERP"}
       </p>
       <p className="close-line">
         {lang === "ar"
-          ? "ROOTK مش مورّد برامج. ROOTK شريكك التقني — نبني نظام التشغيل، ونفضل معاك بعد الإطلاق."
-          : "ROOTK is not a software vendor. ROOTK is your technical partner — we build the operating system, and we stay with you after go-live."}
+          ? "١٥٠ الف جنيه شامل السيستم وتطبيق الموبايل والموقع. وصيانة مجانية لمدة ١٢ شهر."
+          : "150,000 EGP includes the system, the mobile app and the website. Plus twelve months of maintenance, free."}
       </p>
 
-      <div className="close-gifts">
-        <span>
-          {lang === "ar" ? "موقع إلكتروني مجانًا" : "Website included — free"}
-        </span>
-        <span>
-          {lang === "ar" ? "أول سنة صيانة مجانًا" : "First year of maintenance — free"}
-        </span>
-      </div>
-
-      <div className="close-pkgs">
+      <div className={`close-pkgs${PACKAGES.length === 1 ? " is-one" : ""}`}>
         {PACKAGES.map((p) => (
           <article key={p.tag} className={`close-pkg${p.featured ? " is-hot" : ""}`}>
             <div className="close-pkg-top">
@@ -259,13 +227,19 @@ export function CloseBody() {
               <span className="close-tag">{p.tag}</span>
               <h3>{t(p.title)}</h3>
               <p>{t(p.desc)}</p>
+              <ul className="close-inc">
+                {p.items.map((item) => (
+                  <li key={item.en}>{t(item)}</li>
+                ))}
+              </ul>
             </div>
             <div className="close-pkg-price">
               <b className="close-amt" dir="ltr">
                 {p.amount}
                 <i>{lang === "ar" ? "ج.م" : "EGP"}</i>
               </b>
-              {p.was ? <small className="close-was">{t(p.was)}</small> : <small className="close-was is-slot" aria-hidden="true">&nbsp;</small>}
+              {p.note ? <span className="close-offer-note">{t(p.note)}</span> : null}
+              {p.was ? <small className="close-was">{t(p.was)}</small> : null}
             </div>
           </article>
         ))}
@@ -273,49 +247,23 @@ export function CloseBody() {
 
       <div className="close-access">
         <div className="close-access-h">
-          <span>{lang === "ar" ? "حساب الأدمن للتجربة" : "Admin preview account"}</span>
-          <a href={DEMO.url} target="_blank" rel="noreferrer" dir="ltr">
-            {DEMO.host}
-          </a>
+          <span>{lang === "ar" ? "السجل التجاري والبطاقه الضريبيه" : "Commercial register & tax card"}</span>
         </div>
         <div className="close-creds">
           <CopyField
-            label={lang === "ar" ? "البريد" : "Email"}
-            value={DEMO.email}
+            label={lang === "ar" ? "السجل التجاري" : "Commercial register"}
+            value={t(LEGAL.reg)}
             onCopied={flash}
           />
           <CopyField
-            label={lang === "ar" ? "كلمة المرور" : "Password"}
-            value={DEMO.password}
+            label={lang === "ar" ? "البطاقه الضريبيه" : "Tax card"}
+            value={t(LEGAL.tax)}
             onCopied={flash}
           />
         </div>
       </div>
 
-      <div className="ctas">
-        <a className="btn" href={DEMO.url} target="_blank" rel="noreferrer">
-          {lang === "ar" ? "اكتشف النظام" : "Discover the system"}
-        </a>
-        <a className="btn btn-ghost" href={DEMO.url} target="_blank" rel="noreferrer">
-          {lang === "ar" ? "شاهد ROOTK Demo" : "View the ROOTK Demo"}
-        </a>
-      </div>
-
-      <div className="close-viz">
-        {CLOSE_LIFE.map((s) => (
-          <Tile key={s.en} icon={s.icon} en={s.en} ar={s.ar} />
-        ))}
-      </div>
-
       <div className="close-legal">
-        <div>
-          <label>{lang === "ar" ? "السجل التجاري" : "Commercial register"}</label>
-          <b dir="ltr">{t(LEGAL.reg)}</b>
-        </div>
-        <div>
-          <label>{lang === "ar" ? "البطاقة الضريبية" : "Tax card"}</label>
-          <b dir="ltr">{t(LEGAL.tax)}</b>
-        </div>
         <p>ARKON × ROOTK · 2026</p>
       </div>
 

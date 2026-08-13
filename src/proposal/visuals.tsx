@@ -16,11 +16,11 @@ export function PageView({ page }: { page: ContentPage }) {
             <section className="prob-pane prob-before">
               <header className="prob-head">
                 <span className="prob-badge is-bad">{lang === "ar" ? "قبل" : "Before"}</span>
-                <H3 c={tx("شغل متفرّق", "Scattered work")} />
+                <H3 c={tx("شغل متفرق", "Scattered work")} />
                 <p className="prob-lead">
                   {lang === "ar"
-                    ? "كل قسم شايف جزء — والملفات مش بتلتقي."
-                    : "Each department sees a fragment — the files never meet."}
+                    ? "كل قسم شايف جزء. والملفات مش بتلتقي."
+                    : "Each department sees a fragment. The files never meet."}
                 </p>
               </header>
               <div className="prob-scatter" aria-hidden={false}>
@@ -58,8 +58,8 @@ export function PageView({ page }: { page: ContentPage }) {
                 <H3 c={tx("مسار واحد مترابط", "One connected path")} />
                 <p className="prob-lead">
                   {lang === "ar"
-                    ? "من الحملة لإتمام البيع… لنفس النظام."
-                    : "From campaign to Closed Won — inside one system."}
+                    ? "من الحملة لاتمام البيع. على نفس النظام."
+                    : "From campaign to Closed Won. On the same system."}
                 </p>
               </header>
               <ol className="prob-spine">
@@ -70,7 +70,7 @@ export function PageView({ page }: { page: ContentPage }) {
                     ["handshake", "Sales", "السيلز"],
                     ["building", "Inventory", "المخزون"],
                     ["lock", "Reservation", "الحجز"],
-                    ["won", "Closed Won", "إتمام البيع"],
+                    ["won", "Closed Won", "اتمام البيع"],
                     ["ledger", "Finance", "المالية"],
                     ["investor", "Investor", "المستثمر"],
                     ["radar", "Management", "الإدارة"],
@@ -94,81 +94,63 @@ export function PageView({ page }: { page: ContentPage }) {
         </div>
       );
 
-    case "mind":
+    case "features":
+      return (
+        <div className="pg pg-feats">
+          <ol className="feat-grid">
+            {(page.steps ?? []).map((s) => (
+              <li key={s.n ?? s.title.en}>
+                <em>{s.n}</em>
+                <span className="tile-ico">
+                  <Icon name={s.icon} />
+                </span>
+                <div className="feat-copy">
+                  <strong>{t(s.title)}</strong>
+                  {s.points?.length ? (
+                    <ul className="feat-dots">
+                      {s.points.map((p) => (
+                        <li key={p.en}>{t(p)}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ol>
+          {page.value ? <Cap c={page.value} /> : null}
+        </div>
+      );
+
+    case "mind": {
+      const branches = page.branches ?? [];
+      const left = branches.slice(0, 3);
+      const right = branches.slice(3, 6);
       return (
         <div className="pg pg-arch">
-          <Domain
-            icon="handshake"
-            title={tx("التجاري", "Commercial")}
-            items={[
-              tx("الليدز", "Leads"),
-              tx("السيلز", "Sales"),
-              tx("المطابقة", "Matching"),
-              tx("الحجز", "Reservation"),
-              tx("العقد", "Contract"),
-            ]}
-          />
-          <Domain
-            icon="building"
-            title={tx("التشغيل", "Operations")}
-            items={[
-              tx("المشاريع", "Projects"),
-              tx("المخزون", "Inventory"),
-              tx("الوحدة", "Unit"),
-              tx("المخاطر", "Risk"),
-            ]}
-          />
-          <Domain
-            icon="megaphone"
-            title={tx("التسويق", "Marketing")}
-            items={[
-              tx("الحملات", "Campaigns"),
-              tx("المصدر", "Source"),
-              tx("تكلفة الليد", "CPL"),
-              tx("العائد", "ROI"),
-            ]}
-          />
+          {left.map((b) => (
+            <Domain key={b.title.en} icon={b.icon} title={b.title} items={b.items} />
+          ))}
           <div className="core core-os">
             <span className="core-os-glow" aria-hidden="true" />
             <img className="core-os-mark" src="/assets/rootk-mark-light.svg" alt="" />
             <div className="core-os-copy">
               <b dir="ltr">ROOTK</b>
               <em className="core-os-erp" dir="ltr">ERP</em>
-              <Note c={tx("نظام تشغيل الشركة", "The company’s operating system")} />
+              <Note c={page.hub ?? tx("نظام تشغيل الشركة", "The company’s operating system")} />
             </div>
           </div>
-          <Domain
-            icon="ledger"
-            title={tx("المالية", "Finance")}
-            items={[
-              tx("خطة السداد", "Payment plan"),
-              tx("التحصيل", "Collections"),
-              tx("العمولات", "Commissions"),
-              tx("الحسابات", "Accounting"),
-            ]}
+          {right.map((b) => (
+            <Domain key={b.title.en} icon={b.icon} title={b.title} items={b.items} />
+          ))}
+          <Cap
+            c={
+              page.value ??
+              tx("كل اقسام الشركة على نظام واحد. مش كل قسم على برنامج لوحده.", "Every department on one system. Not each on its own product.")
+            }
           />
-          <Domain
-            icon="people"
-            title={tx("الأفراد", "People")}
-            items={[
-              tx("الموارد البشرية", "HR"),
-              tx("التارجت", "Targets"),
-              tx("الأداء", "Performance"),
-              tx("تحفيز الفريق", "Team motivation"),
-            ]}
-          />
-          <Domain
-            icon="chart"
-            title={tx("الإدارة", "Management")}
-            items={[
-              tx("التقارير", "Reports"),
-              tx("تحليل الأداء", "Performance insight"),
-              tx("القرار", "Decision"),
-            ]}
-          />
-          <Cap c={tx("كل أقسام الشركة على نظام واحد — مش كل قسم على برنامج لوحده.", "Every department on one system — not each on its own product.")} />
         </div>
       );
+    }
 
     case "layers":
       return (
@@ -379,8 +361,8 @@ export function PageView({ page }: { page: ContentPage }) {
             c={
               page.value ??
               tx(
-                "البايبلاين مسار بيع كامل: كل مرحلة ليها شغل، وخطوة تالية واضحة.",
-                "The pipeline is a full sales path: work, and a clear next step at every stage."
+                "كل مرحلة ليها شغل واضح، وخطوة بعدها.",
+                "Every stage has clear work, and a next step."
               )
             }
           />

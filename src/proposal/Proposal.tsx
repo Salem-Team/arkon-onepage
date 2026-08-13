@@ -228,20 +228,8 @@ export function Proposal() {
     <div className={`doc doc--${sheetTone} is-flow${docScroll ? " is-doc-scroll" : ""}`}>
       <div className="doc-desk" aria-hidden="true" />
       <header className="chrome">
-        <a
-          href="#p-cover"
-          className="chrome-brand"
-          onClick={(e) => {
-            e.preventDefault();
-            go(1);
-          }}
-        >
-          <img className="arkon" src="/assets/arkon-logo@2x.png" alt="Arkon" />
-          <span className="x">×</span>
-          <img className="rootk" src="/assets/rootk-mark-light.svg" alt="ROOTK" />
-        </a>
         <nav className="ticks" aria-label={lang === "ar" ? "فصول العرض" : "Proposal chapters"}>
-          {CHAPTERS.filter((c) => c.id !== "close").map((c) => (
+          {CHAPTERS.map((c) => (
             <button key={c.id} type="button" className={c.id === currentChapter.id ? "is-on" : ""} onClick={() => go(c.from)}>
               {c.n} {c.label[lang]}
             </button>

@@ -23,7 +23,8 @@ export type Layout =
   | "event"
   | "truth"
   | "intel"
-  | "outcomes";
+  | "outcomes"
+  | "features";
 
 export type Step = {
   n?: string;
@@ -32,6 +33,7 @@ export type Step = {
   body?: Tx;
   data?: Tx;
   next?: Tx;
+  points?: Tx[];
 };
 
 export type Branch = { icon: IconName; title: Tx; items: Tx[] };
@@ -74,11 +76,7 @@ export type ContentPage = {
 export type PageDef = CoverPage | ClosePage | ContentPage;
 
 export const CHAPTERS: { id: ChapterId; n: string; label: Tx; from: number; to: number }[] = [
-  { id: "why", n: "01", label: { ar: "السبب", en: "WHY" }, from: 1, to: 2 },
-  { id: "arch", n: "02", label: { ar: "البنية", en: "ARCHITECTURE" }, from: 3, to: 5 },
-  { id: "comm", n: "03", label: { ar: "التجاري", en: "COMMERCIAL" }, from: 6, to: 11 },
-  { id: "erp", n: "04", label: { ar: "ERP", en: "ERP" }, from: 12, to: 15 },
-  { id: "eco", n: "05", label: { ar: "المنظومة", en: "ECOSYSTEM" }, from: 16, to: 18 },
-  { id: "intel", n: "06", label: { ar: "الإدارة", en: "INTELLIGENCE" }, from: 19, to: 21 },
-  { id: "close", n: "07", label: { ar: "ROOTK", en: "ROOTK" }, from: 22, to: 22 },
+  { id: "why", n: "01", label: { ar: "الغلاف", en: "COVER" }, from: 1, to: 1 },
+  { id: "arch", n: "02", label: { ar: "الفيتشرز", en: "FEATURES" }, from: 2, to: 2 },
+  { id: "close", n: "03", label: { ar: "العرض", en: "OFFER" }, from: 3, to: 3 },
 ];

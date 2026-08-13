@@ -8,12 +8,9 @@ export const DEMO = {
 };
 
 export const NAV: { id: string; label: Tx }[] = [
-  { id: "overview", label: { ar: "القصة", en: "Story" } },
-  { id: "engine", label: { ar: "المحرك", en: "Engine" } },
-  { id: "product", label: { ar: "المنتج", en: "Product" } },
-  { id: "roles", label: { ar: "الأدوار", en: "Roles" } },
-  { id: "intelligence", label: { ar: "الإدارة", en: "Exec" } },
-  { id: "offer", label: { ar: "الأوفر", en: "Offer" } },
+  { id: "overview", label: { ar: "الغلاف", en: "Cover" } },
+  { id: "product", label: { ar: "الفيتشرز", en: "Features" } },
+  { id: "offer", label: { ar: "العرض", en: "Offer" } },
 ];
 
 export const PACKAGES: {
@@ -24,42 +21,22 @@ export const PACKAGES: {
   amount: string;
   was?: Tx;
   ribbon?: Tx;
+  note?: Tx;
   items: Tx[];
 }[] = [
   {
-    tag: "Option 01",
-    title: { ar: "نظام الويب", en: "Web system" },
-    desc: { ar: "منصّة ERP كاملة على الويب — جاهزة للتشغيل", en: "Full ERP platform on web — ready to operate" },
-    amount: "150,000",
-    items: [
-      { ar: "منصّة ERP كاملة على الويب لكل فرق المبيعات والإدارة", en: "Full ERP platform on web for sales and management teams" },
-      { ar: "تهيئة الهوية البصرية وإعداد التشغيل", en: "Visual identity setup and operational configuration" },
-      { ar: "تدريب فريق المبيعات على النظام", en: "Sales team training on the system" },
-    ],
-  },
-  {
-    tag: "Option 02",
+    tag: "Offer",
     featured: true,
-    title: { ar: "ويب + موبايل", en: "Web + mobile" },
-    desc: { ar: "كل مزايا الويب مع تطبيق ميداني للمندوبين", en: "All web features plus a field app for reps" },
-    amount: "237,500",
-    was: { ar: "بدل 250,000 ج.م", en: "Was 250,000 EGP" },
-    ribbon: { ar: "الأكثر توصية · خصم 5٪", en: "Most recommended · 5% discount" },
+    title: { ar: "السيستم كامل", en: "The full system" },
+    desc: { ar: "١٥٠ الف جنيه شامل السيستم وتطبيق الموبايل والموقع. وصيانة مجانية لمدة ١٢ شهر.", en: "150,000 EGP includes the system, the mobile app and the website. Plus twelve months of maintenance, free." },
+    amount: "150,000",
+    ribbon: { ar: "صيانة ١٢ شهر مجاني", en: "12 months maintenance — free" },
+    note: { ar: "اوفر لاي شركه تيجي من جانب Arkon", en: "Offer for any company coming from Arkon" },
     items: [
-      { ar: "كل مزايا نظام الويب", en: "All web system features" },
-      { ar: "تطبيق موبايل iOS / Android للمندوبين", en: "iOS / Android mobile app for field reps" },
-      { ar: "إشعارات فورية وربط المكالمات (Call Bridge)", en: "Instant notifications and Call Bridge" },
-    ],
-  },
-  {
-    tag: "Option 03",
-    title: { ar: "كامل + سورس كود", en: "Full + source code" },
-    desc: { ar: "ملكية كاملة للكود — مرونة تطوير داخلية لاحقًا", en: "Full code ownership — flexibility for future in-house development" },
-    amount: "450,000",
-    items: [
-      { ar: "ويب + موبايل + ملكية السورس كود", en: "Web + mobile + source code ownership" },
-      { ar: "تسليم تقني كامل للبنية والتوثيق", en: "Full technical handover of infrastructure and documentation" },
-      { ar: "حرية التطوير والتخصيص داخليًا مستقبلًا", en: "Freedom to develop and customise in-house going forward" },
+      { ar: "السيستم على الويب", en: "The web system" },
+      { ar: "تطبيق موبايل iOS و Android باسم ولوجو الشركه", en: "iOS & Android mobile app with the company name and logo" },
+      { ar: "الموقع الالكتروني", en: "The website" },
+      { ar: "صيانة مجانية لمدة ١٢ شهر", en: "Twelve months of maintenance — free" },
     ],
   },
 ];
