@@ -124,9 +124,9 @@ export async function exportProposalPdf(opts: {
     await wait(200);
 
     const pdf = await PDFDocument.create();
-    pdf.setTitle("ROOTK CRM — Client Proposal 2026 | Arkon × ROOTK");
+    pdf.setTitle("ROOTK CRM — Client Proposal 2026");
     pdf.setAuthor("ROOTK Systems");
-    pdf.setSubject("Arkon Developments — ROOTK CRM enterprise proposal");
+    pdf.setSubject("ROOTK CRM enterprise proposal");
 
     for (let i = 0; i < sheets.length; i++) {
       const sheet = sheets[i];

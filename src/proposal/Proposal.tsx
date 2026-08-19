@@ -115,7 +115,7 @@ export function Proposal() {
     setProgress({ phase: "prepare", current: 0, total, percent: 4 });
     try {
       await exportProposalPdf({
-        filename: lang === "ar" ? "Arkon-Partner-Offer-ROOTK.pdf" : "Arkon-Partner-Offer-ROOTK-EN.pdf",
+        filename: lang === "ar" ? "ROOTK-CRM-Proposal.pdf" : "ROOTK-CRM-Proposal-EN.pdf",
         onProgress: setProgress,
       });
       window.setTimeout(() => {
@@ -229,10 +229,6 @@ export function Proposal() {
       <div className="doc-desk" aria-hidden="true" />
       <header className="chrome">
         <div className="chrome-brand">
-          <img className="arkon" src="/assets/arkon-logo@2x.png" alt="Arkon" />
-          <span className="x" aria-hidden="true">
-            ×
-          </span>
           <img className="rootk" src="/assets/rootk-brand.png" alt="ROOTK" />
         </div>
         <nav className="ticks" aria-label={lang === "ar" ? "فصول العرض" : "Proposal chapters"}>

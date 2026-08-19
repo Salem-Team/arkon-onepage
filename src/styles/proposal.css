@@ -466,6 +466,47 @@ html.is-flow:not(.is-exporting) .stage + .stage {
     align-items: center;
     justify-content: center;
   }
+
+  html.is-flow:not(.is-exporting) .deck {
+    scroll-snap-type: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) {
+    height: auto !important;
+    min-height: var(--deck-h, 100%) !important;
+    max-height: none !important;
+    overflow: visible !important;
+    scroll-snap-align: none;
+  }
+
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-fit,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-scale,
+  html.is-flow:not(.is-exporting)[dir="rtl"] .stage:has(.pg-feats) .sheet-scale,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-pad,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-body,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .pg-feats,
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-body .pg {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    flex: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-pad {
+    padding-bottom: 120px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid {
+    height: auto !important;
+    flex: none !important;
+    grid-auto-rows: auto;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid > li {
+    height: auto !important;
+  }
 }
 
 /* Mobile/tablet: content-sized pages (no clip / no empty forced height) */
@@ -539,14 +580,27 @@ html[dir="rtl"] .sheet-scale {
   right: 0;
   transform-origin: top right;
 }
-html.is-doc-scroll[dir="rtl"] .sheet-scale,
-html.is-flow.is-doc-scroll[dir="rtl"] .sheet-scale {
+html.is-flow .sheet-scale,
+html.is-flow[dir="rtl"] .sheet-scale,
+html.is-doc-scroll[dir="rtl"] .sheet-scale {
   position: relative;
   top: auto;
   right: auto;
-  left: 0;
+  left: auto;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
   transform: none;
   transform-origin: top left;
+}
+html.is-flow .sheet-fit {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+html.is-flow .sheet {
+  width: 100%;
+  max-width: 100%;
 }
 
 .sheet {
@@ -1129,6 +1183,21 @@ html.is-flow.is-doc-scroll[dir="rtl"] .sheet-scale {
   width: 100%;
   max-width: 100%;
   min-width: 0;
+}
+.cover-marks.is-solo {
+  display: flex;
+  justify-content: center;
+  grid-template-columns: none;
+}
+.cover-marks.is-solo figure {
+  width: auto;
+  max-width: min(320px, 72vw);
+}
+.cover-marks.is-solo .cover-mark-rootk {
+  max-width: 100%;
+  max-height: clamp(52px, 12vw, 96px);
+  width: auto;
+  height: auto;
 }
 .cover-marks figure {
   margin: 0;
@@ -3118,10 +3187,18 @@ html[dir="rtl"] .mf-arr { transform: scaleX(-1); }
     max-width: 32ch;
   }
   html:not(.is-exporting) .cover-mark-arkon {
-    height: clamp(72px, 8.5cqi, 108px);
+    height: clamp(56px, 7cqi, 96px);
+    max-height: clamp(56px, 7cqi, 96px);
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
   html:not(.is-exporting) .cover-mark-rootk {
-    width: clamp(120px, 13cqi, 176px);
+    width: auto;
+    max-width: min(176px, 100%);
+    height: auto;
+    max-height: clamp(40px, 5.6cqi, 72px);
+    object-fit: contain;
   }
   html:not(.is-exporting) .cover-x {
     font-size: clamp(36px, 4.2cqi, 56px);
@@ -3580,7 +3657,8 @@ html[dir="rtl"] .mf-arr { transform: scaleX(-1); }
     height: auto !important;
     min-height: 100%;
     max-height: none !important;
-    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
   }
   html:not(.is-exporting) .doc {
     display: flex;
@@ -3588,7 +3666,8 @@ html[dir="rtl"] .mf-arr { transform: scaleX(-1); }
     min-height: 100svh;
     height: auto !important;
     max-height: none !important;
-    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
   }
   html:not(.is-exporting) .chrome {
     position: sticky !important;
@@ -4366,28 +4445,7 @@ html.is-flow:not(.is-exporting) .feat-grid > li:hover {
     max-width: 100%;
   }
   html.is-flow:not(.is-exporting) .ticks {
-    display: flex !important;
-    order: 0;
-    flex: 1 1 auto;
-    min-width: 0;
-    max-width: none;
-    justify-content: flex-start;
-    gap: 6px;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-  html.is-flow:not(.is-exporting) .tick-l {
-    display: none;
-  }
-  html.is-flow:not(.is-exporting) .ticks button {
-    flex: 0 0 auto;
-    width: 40px;
-    min-width: 40px;
-    min-height: 40px;
-    padding: 0;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    justify-content: center;
+    display: none !important;
   }
   html.is-flow:not(.is-exporting) .chrome-meta {
     order: 0;
@@ -4398,7 +4456,9 @@ html.is-flow:not(.is-exporting) .feat-grid > li:hover {
     flex-shrink: 0;
   }
   html.is-flow:not(.is-exporting) .chrome-pg {
-    display: none !important;
+    display: inline-flex !important;
+    margin-inline-end: auto;
+    min-width: 0;
   }
   html.is-flow:not(.is-exporting) .chrome-pdf {
     min-height: 40px;

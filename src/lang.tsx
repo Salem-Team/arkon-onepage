@@ -14,7 +14,7 @@ const LangContext = createContext<Ctx | null>(null);
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>(() => {
-    const saved = localStorage.getItem("arkon-lang");
+    const saved = localStorage.getItem("rootk-lang");
     return saved === "en" || saved === "ar" ? saved : "ar";
   });
   const dir = lang === "ar" ? "rtl" : "ltr";
@@ -22,11 +22,8 @@ export function LangProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = lang;
     document.documentElement.dir = dir;
-    localStorage.setItem("arkon-lang", lang);
-    document.title =
-      lang === "ar"
-        ? "ROOTK CRM — عرض شراكة Arkon"
-        : "ROOTK CRM — Arkon Partner Offer";
+    localStorage.setItem("rootk-lang", lang);
+    document.title = lang === "ar" ? "ROOTK CRM" : "ROOTK CRM";
   }, [lang, dir]);
 
   const value = useMemo<Ctx>(

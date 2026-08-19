@@ -189,8 +189,16 @@ html:not(.is-exporting) .ticks {
     flex-direction: column !important;
   }
 
+  html.is-flow:not(.is-exporting) .deck {
+    scroll-snap-type: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .stage:has(.pg-feats) {
+    scroll-snap-align: none;
+  }
+
   html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-pad {
-    padding-bottom: 88px !important;
+    padding-bottom: 140px !important;
   }
 
   html.is-flow:not(.is-exporting) .feat-grid {
@@ -1212,4 +1220,140 @@ html:not(.is-exporting) .ticks {
     font-size: 12px !important;
     padding: 10px 8px !important;
   }
+}
+
+/* Final lock: never let the 1480 artboard leak past the viewport */
+@media (max-width: 1200px) {
+  html.is-flow:not(.is-exporting),
+  html.is-flow:not(.is-exporting) body,
+  html.is-flow:not(.is-exporting) #root,
+  html.is-flow:not(.is-exporting) .doc {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-fit,
+  html.is-flow:not(.is-exporting) .sheet-scale,
+  html.is-flow:not(.is-exporting)[dir="rtl"] .sheet-scale,
+  html.is-flow:not(.is-exporting) .sheet {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    overflow-x: hidden !important;
+  }
+
+  html.is-flow:not(.is-exporting) .ticks {
+    display: none !important;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-pg {
+    display: inline-flex !important;
+    font-size: 11px;
+    min-width: 0;
+    margin-inline-end: auto;
+  }
+
+  html.is-flow:not(.is-exporting) .chrome-pg i {
+    display: none;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-head {
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  html.is-flow:not(.is-exporting) .sheet-head .mark,
+  html.is-flow:not(.is-exporting) .sheet-head .sec {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  html.is-flow:not(.is-exporting) .hed-h,
+  html.is-flow:not(.is-exporting) .hed-l,
+  html.is-flow:not(.is-exporting) .cover-top,
+  html.is-flow:not(.is-exporting) .cover-sub {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    max-width: 100% !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-marks {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-arkon,
+  html.is-flow:not(.is-exporting) .cover-mark-rootk {
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 48px !important;
+    object-fit: contain !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-rootk {
+    max-height: 36px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  html.is-flow:not(.is-exporting) .sheet-head .mark {
+    display: none;
+  }
+
+  html.is-flow:not(.is-exporting) .feat-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-arkon {
+    max-height: 40px !important;
+  }
+
+  html.is-flow:not(.is-exporting) .cover-mark-rootk {
+    max-height: 30px !important;
+  }
+}
+
+/* Show every feature card: grow the page, never clip the grid */
+html.is-flow:not(.is-exporting) .stage:has(.pg-feats),
+html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-fit,
+html.is-flow:not(.is-exporting) .stage:has(.pg-feats) .sheet-scale,
+html.is-flow:not(.is-exporting)[dir="rtl"] .stage:has(.pg-feats) .sheet-scale,
+html.is-flow:not(.is-exporting) .sheet:has(.pg-feats),
+html.is-flow:not(.is-exporting) .sheet:has(.pg-feats) .sheet-pad,
+html.is-flow:not(.is-exporting) .sheet:has(.pg-feats) .sheet-body,
+html.is-flow:not(.is-exporting) .pg-feats {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  flex: none !important;
+}
+
+html.is-flow:not(.is-exporting) .feat-grid {
+  height: auto !important;
+  flex: none !important;
+  overflow: visible !important;
+  grid-auto-rows: auto !important;
+}
+
+html.is-flow:not(.is-exporting) .feat-grid > li {
+  height: auto !important;
+  overflow: visible !important;
+  opacity: 1;
+}
+
+html.is-flow:not(.is-exporting) .deck {
+  overflow-y: auto !important;
 }

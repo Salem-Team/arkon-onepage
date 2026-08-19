@@ -71,15 +71,15 @@ export function Sheet({
             <div className="sheet-pad">
               {!bare ? (
                 <header className="sheet-head">
-                  <span className="mark">{t({ ar: "عرض شراكة Arkon", en: "Arkon Partner Offer" })}</span>
+                  <span className="mark">{t({ ar: "عرض ROOTK", en: "ROOTK Offer" })}</span>
                   <span className="sec">
-                    {kicker ? t(kicker) : t({ ar: "عرض شراكة Arkon", en: "Arkon Partner Offer" })}
+                    {kicker ? t(kicker) : t({ ar: "عرض ROOTK", en: "ROOTK Offer" })}
                   </span>
                 </header>
               ) : null}
               <div className="sheet-body">{children}</div>
               <footer className="sheet-foot">
-                <span>{t({ ar: "عرض شراكة Arkon · ROOTK", en: "Arkon Partner Offer · ROOTK" })}</span>
+                <span>{t({ ar: "ROOTK · 2026", en: "ROOTK · 2026" })}</span>
                 <span className="ch">
                   {CHAPTERS.find((c) => c.id === chapter)?.n} /{" "}
                   {t(CHAPTERS.find((c) => c.id === chapter)?.label ?? { ar: "", en: "" })}
@@ -125,19 +125,18 @@ export function CoverBody() {
         <i className="cover-orb cover-orb-b" />
       </div>
       <p className="cover-top" dir={lang === "ar" ? "rtl" : "ltr"}>
-        {lang === "ar" ? "شراكه طويله الامد" : "Partnership for a long time"}
+        {lang === "ar" ? "نظام تشغيل عقاري" : "Real estate operating system"}
       </p>
-      <div className="cover-marks">
-        <figure>
-          <img className="cover-mark-arkon" src="/assets/arkon-logo@2x.png" alt="Arkon" />
-        </figure>
-        <span className="cover-x" aria-hidden="true">
-          ×
-        </span>
+      <div className="cover-marks is-solo">
         <figure>
           <img className="cover-mark-rootk" src="/assets/rootk-brand.png" alt="ROOTK" />
         </figure>
       </div>
+      <p className="cover-sub" dir={lang === "ar" ? "rtl" : "ltr"}>
+        {lang === "ar"
+          ? "السيستم وتطبيق الموبايل والموقع. وصيانة ١٢ شهر."
+          : "The system, the mobile app and the website. Plus twelve months of maintenance."}
+      </p>
     </div>
   );
 }
@@ -149,7 +148,7 @@ export function CloseBody() {
     <div className="close">
       <div className="close-lead">
         <p className="close-kicker" dir={lang === "ar" ? "rtl" : "ltr"}>
-          {lang === "ar" ? "عرض شراكة Arkon · ROOTK" : "ARKON PARTNER OFFER · ROOTK"}
+          {lang === "ar" ? "عرض ROOTK" : "ROOTK OFFER"}
         </p>
         <div className="close-brand">
           <img className="close-rootk" src="/assets/rootk-brand.png" alt="ROOTK" />
@@ -218,7 +217,7 @@ export function CloseBody() {
       </div>
 
       <div className="close-legal">
-        <p>{lang === "ar" ? "عرض شراكة Arkon · ROOTK · 2026" : "ARKON PARTNER OFFER · ROOTK · 2026"}</p>
+        <p>{lang === "ar" ? "ROOTK · 2026" : "ROOTK · 2026"}</p>
       </div>
     </div>
   );
